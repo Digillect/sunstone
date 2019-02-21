@@ -1,0 +1,46 @@
+# Global wildcards
+*~
+*.[7bgx]z
+*.aps
+*.bak
+*.dll
+*.exe
+*.fla
+#*.[Hh]x[IiSs]
+*.hx[is]
+*.[jrt]ar
+*.log
+*.ms[imp]
+*.ncb
+*.obj
+*.old
+*.opensdf
+*.orig
+*.pdb
+*.Publish.xml
+*.sav
+*.sdf
+*.sln.cache
+*.suo
+*.tgz
+*.tmp
+*.user
+*.zip
+
+# Output
+out/
+
+# IDEs
+.idea/
+.metadata/
+.settings/
+.vs/
+.vscode/
+*.iml
+*.userprefs
+
+# Operating systems generated
+__MACOSX/
+*.DS_Store
+[Dd]esktop.ini
+[Tt]humbs.db

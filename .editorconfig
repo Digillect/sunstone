@@ -1,0 +1,37 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Default settings
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+# (Please don't specify an indent_size here; that has too many unintended consequences.)
+
+[*.rb]
+indent_size = 2
+indent_style = space
+
+[*.md]
+indent_size = 4
+trim_trailing_whitespace = false
+
+[*.yaml]
+indent_size = 2
+indent_style = space
+
+# Shell scripts
+[*.{bat,cmd}]
+end_of_line = crlf
+indent_size = 4
+
+[*.sh]
+end_of_line = lf
+indent_size = 4
+
+[*.{ps1,psm1}]
+charset = utf-8-bom
+indent_size = 4
+indent_style = space
