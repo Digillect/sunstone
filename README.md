@@ -1,6 +1,8 @@
 # Sunstone
 
-Convert Ruby DSL into Kubernetes manifests or Helm chart templates.
+[![Build Status](https://travis-ci.com/Digillect/sunstone.svg?branch=master)](https://travis-ci.com/Digillect/sunstone)
+
+Ruby-style DSL preprocessor for Kubernetes resource manifests.
 
 ## Usage
 
