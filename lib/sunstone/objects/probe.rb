@@ -41,7 +41,7 @@ module Sunstone
       def use_command(*command)
         raise 'Only one action can be used in probe' unless action_empty?
 
-        @exec = ExecAction.new *command
+        @exec = ExecAction.new(*command)
       end
 
       def use_http(path, port = 80)

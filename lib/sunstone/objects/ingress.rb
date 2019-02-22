@@ -22,8 +22,8 @@ module Sunstone
 
         raise 'Service name must be specified or scope should be active' unless service_name
 
-        rule = IngressRule.new(host).tap do |rule|
-          rule.add_path service_name, service_port, path
+        rule = IngressRule.new(host).tap do |r|
+          r.add_path service_name, service_port, path
         end
 
         @spec.rules.push rule

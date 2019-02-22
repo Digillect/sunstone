@@ -46,7 +46,7 @@ module Sunstone
       def liveness_probe(&block)
         @liveness_probe ||= Probe.new
 
-        @liveness_probe.instance_eval &block if block_given?
+        @liveness_probe.instance_eval(&block) if block_given?
 
         @liveness_probe
       end
@@ -54,7 +54,7 @@ module Sunstone
       def readiness_probe(&block)
         @readiness_probe ||= Probe.new
 
-        @readiness_probe.instance_eval &block if block_given?
+        @readiness_probe.instance_eval(&block) if block_given?
 
         @readiness_probe
       end
