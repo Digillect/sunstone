@@ -4,6 +4,23 @@
 
 Ruby-style DSL preprocessor for Kubernetes resource manifests.
 
+## Installation
+
+On MacOS Sunstone can be installed using Homebrew. First you'll need to install Digillect tap (if not already installed),
+and then Sunstone:
+
+```bash
+$ brew tap digillect/core
+...
+$ brew install sunstone
+``` 
+
+That will install latest stable version of Sunstone. If you wish to play with the bleeding edge version use `--HEAD` flag to brew:
+
+```bash
+$ brew install --HEAD sunstone
+```
+
 ## Usage
 
 Run `sunstone` to convert a directory with resource definitions into Kubernetes
