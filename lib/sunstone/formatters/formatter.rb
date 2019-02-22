@@ -58,7 +58,7 @@ module Sunstone
       end
 
       def prepare_output_directory(path)
-        File.mkdir_p path unless Dir.exist? path
+        FileUtils.mkdir_p path unless Dir.exist? path
       rescue IOError => err
         error "Unable to create directory #{path}: #{err.message}"
       end
