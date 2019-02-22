@@ -64,7 +64,7 @@ module Sunstone
         false
       elsif value == 'nil'
         nil
-      elsif /[0-9]+/.match?(value)
+      elsif /^[0-9]+$/.match?(value)
         value.to_i
       else
         value
