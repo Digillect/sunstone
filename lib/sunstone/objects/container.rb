@@ -1,5 +1,6 @@
 require 'sunstone/objects/container_port'
 require 'sunstone/objects/container_environment_helper'
+require 'sunstone/objects/probe'
 require 'sunstone/objects/volume_mount'
 
 module Sunstone
@@ -42,6 +43,22 @@ module Sunstone
         @volume_mounts.push VolumeMount.new(volume_name, mount_path, readonly, mount_propagation, sub_path)
       end
 
+      def liveness_probe(&block)
+        @liveness_probe ||= Probe.new
+
+        @liveness_probe.instance_eval &block if block_given?
+
+        @liveness_probe
+      end
+
+      def readiness_probe(&block)
+        @readiness_probe ||= Probe.new
+
+        @readiness_probe.instance_eval &block if block_given?
+
+        @readiness_probe
+      end
+
       def to_hash
         result = { name: name.to_s, image: image.to_s }
 
@@ -51,6 +68,8 @@ module Sunstone
         result[:env] = @env.map(&:to_hash) unless @env.empty?
         result[:envFrom] = @env_from.map(&:to_hash) unless @env_from.empty?
         result[:ports] = @ports.map(&:to_hash) unless @ports.empty?
+        result[:livenessProbe] = @liveness_probe.to_hash unless @liveness_probe.blank?
+        result[:readinessProbe] = @readiness_probe.to_hash unless @readiness_probe.blank?
         result[:volumeMounts] = @volume_mounts.map(&:to_hash) unless @volume_mounts.empty?
 
         result
