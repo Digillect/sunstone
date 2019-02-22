@@ -5,8 +5,8 @@ require 'sunstone/objects/volume_array'
 module Sunstone
   module Objects
     class PodSpec
+      attr_accessor :active_deadline_seconds, :automount_service_account_token, :dns_policy, :service_account_name, :restart_policy
       attr_reader :containers, :image_pull_secrets, :init_containers, :volumes
-      attr_accessor :service_account_name, :restart_policy
 
       def initialize
         @containers = []
@@ -46,6 +46,9 @@ module Sunstone
       def to_hash
         result = {}
 
+        result[:activeDeadlineSeconds] = @active_deadline_seconds if @active_deadline_seconds
+        result[:automountServiceAccountToken] = @automount_service_account_token if @automount_service_account_token
+        result[:dnsPolicy] = @dns_policy if @dns_policy
         result[:restartPolicy] = @restart_policy.to_s if @restart_policy
         result[:imagePullSecrets] = @image_pull_secrets.map(&:to_hash) unless @image_pull_secrets.empty?
         result[:serviceAccountName] = @service_account_name unless @service_account_name.blank?
