@@ -53,8 +53,8 @@ module Sunstone
       @class_to_resource[klass] = resource
 
       extension = Module.new do
-        define_method(resource) do |name = nil, *args, &block|
-          object(name, klass, *args, &block)
+        define_method(resource) do |name = nil, &block|
+          object(name, klass, &block)
         end
       end
 
@@ -84,7 +84,7 @@ module Sunstone
 
     private
 
-    def object(name, klass, *args, &block)
+    def object(name, klass, &block)
       if name.blank?
         error "Name for the #{klass.name} is not provided through the factory or scope" unless scope?
 
@@ -96,7 +96,7 @@ module Sunstone
       object = objects.find { |obj| obj.instance_of?(klass) && obj.metadata.name == name }
 
       unless object
-        object = klass.new name, *args
+        object = klass.new name
 
         objects.push object
 
