@@ -7,6 +7,7 @@ Bundler.require(:default, :test)
 
 require 'minitest/autorun'
 require 'minitest/reporters'
+require 'minitest/great_expectations'
 
 MiniTest::Reporters.use!
 

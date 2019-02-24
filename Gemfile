@@ -11,5 +11,6 @@ end
 group :test do
   gem 'minitest', '~> 5.0'
   gem 'minitest-reporters', '~> 1.3.6'
+  gem 'minitest-great_expectations'
   gem 'rake', '~> 12.3'
 end

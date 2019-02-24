@@ -16,6 +16,7 @@ module Sunstone
       autoload :ConfigMap
       autoload :CronJob
       autoload :CustomResource
+      autoload :DaemonSet
       autoload :Deployment
       autoload :Job
       autoload :Ingress
