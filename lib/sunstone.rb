@@ -20,6 +20,7 @@ module Sunstone
       autoload :Deployment
       autoload :Job
       autoload :Ingress
+      autoload :PersistentVolumeClaim
       autoload :RoleBinding
       autoload :Secret
       autoload :Service
