@@ -1,6 +1,8 @@
+require 'sunstone/objects/rolling_update_base'
+
 module Sunstone
   module Objects
-    class RollingUpdateDaemonSet
+    class RollingUpdateDaemonSet < RollingUpdateBase
       def initialize
         @max_unavailable = nil
       end
@@ -12,29 +14,7 @@ module Sunstone
       def max_unavailable(value = nil)
         return @max_unavailable if value.nil?
 
-        if value.is_a? Integer
-          raise ArgumentError, "max_unavailable's value should be greater than zero" unless value.positive?
-        elsif value.is_a? String
-          valid = value.end_with? '%'
-
-          if valid
-            percentage = value.chomp '%'
-
-            valid = /^\d+$/.match? percentage
-
-            if valid
-              percentage = percentage.to_i
-
-              valid = percentage.positive? && percentage <= 100
-            end
-          end
-
-          raise ArgumentError, "max_unavailable's value should be an integer between 1 and 100 and ends with a percent sign" unless valid
-        else
-          raise ArgumentError, 'max_unavailable value should be an absolute count or percentage'
-        end
-
-        @max_unavailable = value
+        @max_unavailable = count_or_percentage value, 'max_unavailable'
       end
 
       def to_hash
