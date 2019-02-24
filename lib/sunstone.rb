@@ -23,6 +23,7 @@ module Sunstone
       autoload :RoleBinding
       autoload :Secret
       autoload :Service
+      autoload :StatefulSet
     end
   end
 

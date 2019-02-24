@@ -1,4 +1,6 @@
 require 'sunstone/objects/daemon_set_update_strategy'
+require 'sunstone/objects/label_selector'
+require 'sunstone/objects/pod_template_spec'
 
 module Sunstone
   module Objects
