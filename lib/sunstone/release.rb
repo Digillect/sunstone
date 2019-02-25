@@ -33,6 +33,8 @@ module Sunstone
     end
 
     def define_helper(name, *resources, &block)
+      resources.push Sunstone::Objects::KubernetesObject if resources.empty?
+
       extension = Module.new do
         define_method(name.to_sym, &block)
       end
