@@ -5,7 +5,8 @@ require 'sunstone/objects/subject'
 module Sunstone
   module Objects
     class ClusterRoleBinding < KubernetesObject
-      attr_reader :role_ref, :subjects
+      property :role_ref, readonly: true
+      property :subjects, readonly: true
 
       def initialize(name)
         super
@@ -31,15 +32,6 @@ module Sunstone
 
       def add_service_account(name, namespace)
         @subjects << Subject.new(:ServiceAccount, name, namespace)
-      end
-
-      def to_hash
-        result = super
-
-        result[:roleRef] = @role_ref.to_hash
-        result[:subjects] = @subjects.map(&:to_hash)
-
-        result
       end
     end
   end

@@ -1,14 +1,14 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class HTTPIngressRuleValue
-      attr_reader :paths
+    class HTTPIngressRuleValue < BaseObject
+      property :paths, readonly: true
 
       def initialize
-        @paths = []
-      end
+        super
 
-      def to_hash
-        { paths: @paths.map(&:to_hash) }
+        @paths = []
       end
     end
   end

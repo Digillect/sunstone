@@ -4,7 +4,7 @@ require 'sunstone/objects/service_spec'
 module Sunstone
   module Objects
     class Service < KubernetesObject
-      attr_reader :spec
+      property :spec, readonly: true
 
       def initialize(name)
         super
@@ -22,14 +22,6 @@ module Sunstone
 
       def expose_default_http_port
         @spec.add_port 80, name: :http
-      end
-
-      def to_hash
-        result = super
-
-        result[:spec] = @spec.to_hash
-
-        result
       end
     end
   end

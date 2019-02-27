@@ -1,11 +1,14 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/kubernetes_object_metadata'
 
 module Sunstone
   module Objects
-    class KubernetesObject
-      attr_reader :metadata
+    class KubernetesObject < BaseObject
+      property :metadata, readonly: true
 
       def initialize(name)
+        super()
+
         @metadata = KubernetesObjectMetadata.new(name)
       end
 
@@ -17,12 +20,12 @@ module Sunstone
         raise "API Version must be specified for #{kind}"
       end
 
-      def to_hash
-        {
-          apiVersion: api_version,
-          kind: kind,
-          metadata: @metadata.to_hash
-        }
+      private
+
+      def pre_serialize_properties(result)
+        result[:apiVersion] = api_version
+        result[:kind] = kind
+        result[:metadata] = @metadata.to_hash
       end
     end
   end

@@ -10,8 +10,6 @@ module Sunstone
         @rolling_update = RollingUpdateDeployment.new
       end
 
-      attr_reader :rolling_update
-
       def type(value = nil)
         return @type unless value
 
@@ -21,6 +19,12 @@ module Sunstone
         return if @type == value
 
         @type = value
+      end
+
+      def rolling_update(&block)
+        @rolling_update.instance_eval(&block) if block_given?
+
+        @rolling_update
       end
 
       def empty?

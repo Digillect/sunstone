@@ -1,11 +1,15 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/label_selector_requirement'
 
 module Sunstone
   module Objects
-    class LabelSelector
-      attr_reader :match_expressions, :match_labels
+    class LabelSelector < BaseObject
+      property :match_expressions, readonly: true
+      property :match_labels, readonly: true
 
       def initialize
+        super
+
         @match_expressions = []
         @match_labels = {}
       end
@@ -32,17 +36,6 @@ module Sunstone
 
       def empty?
         @match_expressions.empty? && @match_labels.empty?
-      end
-
-      def to_hash
-        return nil if empty?
-
-        result = {}
-
-        result[:matchExpressions] = @match_expressions.map(&:to_hash) unless @match_expressions.empty?
-        result[:matchLabels] = @match_labels.transform_values(&:to_s) unless @match_labels.empty?
-
-        result
       end
     end
   end

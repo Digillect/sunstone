@@ -1,3 +1,4 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/container_port'
 require 'sunstone/objects/container_environment_helper'
 require 'sunstone/objects/probe'
@@ -5,26 +6,49 @@ require 'sunstone/objects/volume_mount'
 
 module Sunstone
   module Objects
-    class Container
-      attr_accessor :image_pull_policy
-      attr_reader :args, :command, :env, :env_from, :name, :ports, :volume_mounts
-      attr_writer :image
+    class Container < BaseObject
+      property :name, readonly: true
+      property :image
+      property :image_pull_policy
+      property :args, readonly: true
+      property :command, readonly: true
+      property :working_dir
+      property :stdin, boolean: true
+      property :stdin_once, boolean: true
+      property :env, readonly: true
+      property :env_from, readonly: true
+      property :ports, readonly: true
+      property :liveness_probe, readonly: true
+      property :readiness_probe, readonly: true
+      property :termination_message_path
+      property :termination_message_policy
+      property :tty, boolean: true
+      property :volume_mounts, readonly: true
 
       def initialize(name)
+        super()
+
         @args = []
         @command = []
         @env = []
         @env_from = []
         @name = name
         @ports = []
+        @liveness_probe = Probe.new
+        @readiness_probe = Probe.new
         @volume_mounts = []
       end
 
-      def image(value = nil, pull_policy = nil)
-        @image = value.to_s unless value.blank?
-        @image_pull_policy = pull_policy unless pull_policy.blank?
+      def args(*args)
+        return @args if args.empty?
 
-        @image
+        @args.concat args
+      end
+
+      def command(*command_parts)
+        return @command if command_parts.empty?
+
+        @command.concat command_parts
       end
 
       def expose_default_http_port
@@ -39,40 +63,15 @@ module Sunstone
         @environment
       end
 
+      def image(image = nil, image_pull_policy = nil)
+        return @image unless image
+
+        @image_pull_policy = image_pull_policy if image_pull_policy
+        @image = image
+      end
+
       def mount_volume(volume_name, mount_path, readonly: nil, mount_propagation: nil, sub_path: nil)
         @volume_mounts.push VolumeMount.new(volume_name, mount_path, readonly, mount_propagation, sub_path)
-      end
-
-      def liveness_probe(&block)
-        @liveness_probe ||= Probe.new
-
-        @liveness_probe.instance_eval(&block) if block_given?
-
-        @liveness_probe
-      end
-
-      def readiness_probe(&block)
-        @readiness_probe ||= Probe.new
-
-        @readiness_probe.instance_eval(&block) if block_given?
-
-        @readiness_probe
-      end
-
-      def to_hash
-        result = { name: name.to_s, image: image.to_s }
-
-        result[:imagePullPolicy] = @image_pull_policy.to_s unless @image_pull_policy.blank?
-        result[:args] = @args.flatten.map(&:to_s) unless @args.empty?
-        result[:command] = @command.flatten.map(&:to_s) unless @command.empty?
-        result[:env] = @env.map(&:to_hash) unless @env.empty?
-        result[:envFrom] = @env_from.map(&:to_hash) unless @env_from.empty?
-        result[:ports] = @ports.map(&:to_hash) unless @ports.empty?
-        result[:livenessProbe] = @liveness_probe.to_hash unless @liveness_probe.blank?
-        result[:readinessProbe] = @readiness_probe.to_hash unless @readiness_probe.blank?
-        result[:volumeMounts] = @volume_mounts.map(&:to_hash) unless @volume_mounts.empty?
-
-        result
       end
     end
   end

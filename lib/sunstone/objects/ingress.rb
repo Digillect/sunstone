@@ -5,7 +5,7 @@ require 'sunstone/objects/ingress_rule'
 module Sunstone
   module Objects
     class Ingress < KubernetesObject
-      attr_reader :spec
+      property :spec, readonly: true
 
       def initialize(name)
         super
@@ -27,10 +27,6 @@ module Sunstone
         end
 
         @spec.rules.push rule
-      end
-
-      def to_hash
-        super.merge! spec: @spec.to_hash
       end
     end
   end

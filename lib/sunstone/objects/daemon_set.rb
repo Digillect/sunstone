@@ -9,7 +9,7 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      attr_reader :spec
+      property :spec, readonly: true
 
       def initialize(name)
         super
@@ -19,14 +19,6 @@ module Sunstone
 
       def api_version
         'apps/v1'
-      end
-
-      def to_hash
-        result = super
-
-        result[:spec] = @spec.to_hash
-
-        result
       end
     end
   end

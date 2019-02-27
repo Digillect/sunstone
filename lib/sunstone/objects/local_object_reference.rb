@@ -1,14 +1,14 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class LocalObjectReference
-      attr_reader :name
+    class LocalObjectReference < BaseObject
+      property :name
 
       def initialize(name)
-        @name = name.to_s
-      end
+        super()
 
-      def to_hash
-        { name: @name }
+        @name = name.to_s
       end
     end
   end

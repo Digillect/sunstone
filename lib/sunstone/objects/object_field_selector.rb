@@ -1,19 +1,16 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class ObjectFieldSelector
-      attr_reader :api_version, :field_path
+    class ObjectFieldSelector < BaseObject
+      property :field_path
+      property :api_version
 
       def initialize(field_path, api_version = nil)
+        super()
+
         @api_version = api_version
         @field_path = field_path
-      end
-
-      def to_hash
-        result = { fieldPath: @field_path }
-
-        result[:apiVersion] = @api_version unless @api_version.blank?
-
-        result
       end
     end
   end

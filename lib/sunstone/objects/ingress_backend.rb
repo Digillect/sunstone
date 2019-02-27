@@ -1,15 +1,20 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class IngressBackend
-      attr_reader :service_name, :service_port
+    class IngressBackend < BaseObject
+      property :service_name
+      property :service_port
 
-      def initialize(service_name, service_port)
+      def initialize(service_name = nil, service_port = nil)
+        super()
+
         @service_name = service_name
         @service_port = service_port
       end
-
-      def to_hash
-        { serviceName: @service_name.to_s, servicePort: @service_port }
+      
+      def empty?
+        @service_name.nil? || @service_port.nil?
       end
     end
   end

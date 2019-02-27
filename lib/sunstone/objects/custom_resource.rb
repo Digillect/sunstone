@@ -11,10 +11,10 @@ module Sunstone
         @fields = RecursiveOpenStruct.new
       end
 
-      def to_hash
-        result = super
+      protected
 
-        result.deep_merge @fields.to_hash
+      def post_serialize_properties(result)
+        result.deep_merge! @fields.to_hash
       end
     end
   end

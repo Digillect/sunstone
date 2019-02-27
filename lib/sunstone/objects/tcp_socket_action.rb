@@ -1,19 +1,16 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class TcpSocketAction
-      attr_reader :host, :port
+    class TcpSocketAction < BaseObject
+      property :port
+      property :host
 
       def initialize(port, host = nil)
-        @host = host
+        super()
+
         @port = port
-      end
-
-      def to_hash
-        result = { port: @port }
-
-        result[:host] = @host.to_s if @host
-
-        result
+        @host = host
       end
     end
   end

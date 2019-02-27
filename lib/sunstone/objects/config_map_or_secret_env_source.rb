@@ -1,25 +1,18 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class ConfigMapOrSecretEnvSource
-      attr_reader :name
+    class ConfigMapOrSecretEnvSource < BaseObject
+      property :name
+      property :optional, boolean: true, readonly: true
 
       def initialize(name, optional = nil)
         raise ArgumentError, 'Name must be specified' if name.blank?
 
+        super()
+
         @name = name
         @optional = optional
-      end
-
-      def optional?
-        @optional
-      end
-
-      def to_hash
-        result = { name: @name.to_s }
-
-        result[:optional] = @optional unless @optional.nil?
-
-        result
       end
     end
   end

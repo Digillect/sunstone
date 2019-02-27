@@ -4,7 +4,7 @@ require 'sunstone/objects/persistent_volume_claim_spec'
 module Sunstone
   module Objects
     class PersistentVolumeClaim < KubernetesObject
-      attr_reader :spec
+      property :spec, readonly: true
 
       def initialize(name)
         super
@@ -34,14 +34,6 @@ module Sunstone
 
       def storage_request(volume)
         @spec.storage_request = volume
-      end
-
-      def to_hash
-        result = super
-
-        result[:spec] = @spec.to_hash
-
-        result
       end
     end
   end

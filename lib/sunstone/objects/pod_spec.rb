@@ -1,16 +1,39 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/container'
 require 'sunstone/objects/local_object_reference_array'
 require 'sunstone/objects/volume_array'
 
 module Sunstone
   module Objects
-    class PodSpec
-      attr_accessor :active_deadline_seconds, :automount_service_account_token, :dns_policy, :service_account_name, :restart_policy
-      attr_reader :containers, :image_pull_secrets, :init_containers, :volumes
+    class PodSpec < BaseObject
+      property :active_deadline_seconds
+      property :automount_service_account_token, boolean: true
+      property :dns_policy
+      property :enable_service_links, boolean: true
+      property :host_ipc, boolean: true, serialized_name: :hostIPC
+      property :host_network, boolean: true
+      property :host_pid, boolean: true, serialized_name: :hostPID
+      property :hostname
+      property :node_name
+      property :priority
+      property :priority_class_name
+      property :restart_policy
+      property :runtime_class_name
+      property :scheduler_name
+      property :service_account_name
+      property :share_process_namespace, boolean: true
+      property :subdomain
+      property :termination_grace_period_seconds
+      property :image_pull_secrets, readonly: true
+      property :containers, readonly: true
+      property :init_containers,readonly: true
+      property :volumes, readonly: true
 
       def initialize
-        @containers = []
+        super
+
         @image_pull_secrets = LocalObjectReferenceArray.new
+        @containers = []
         @init_containers = []
         @volumes = VolumeArray.new
       end
@@ -41,22 +64,6 @@ module Sunstone
         container.instance_eval(&block) if block_given?
 
         container
-      end
-
-      def to_hash
-        result = {}
-
-        result[:activeDeadlineSeconds] = @active_deadline_seconds if @active_deadline_seconds
-        result[:automountServiceAccountToken] = @automount_service_account_token if @automount_service_account_token
-        result[:dnsPolicy] = @dns_policy if @dns_policy
-        result[:restartPolicy] = @restart_policy.to_s if @restart_policy
-        result[:imagePullSecrets] = @image_pull_secrets.map(&:to_hash) unless @image_pull_secrets.empty?
-        result[:serviceAccountName] = @service_account_name unless @service_account_name.blank?
-        result[:containers] = @containers.map(&:to_hash)
-        result[:initContainers] = @init_containers.map(&:to_hash) unless @init_containers.empty?
-        result[:volumes] = @volumes.map(&:to_hash) unless @volumes.empty?
-
-        result
       end
     end
   end

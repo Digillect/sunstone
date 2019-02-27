@@ -1,27 +1,23 @@
 require 'base64'
+require 'sunstone/objects/kubernetes_object'
 require 'sunstone/objects/config_map_or_secret'
 
 module Sunstone
   module Objects
-    class Secret < ConfigMapOrSecret
-      attr_accessor :type
+    class Secret < KubernetesObject
+      include ConfigMapOrSecret
+
+      property :type
+      property :data, readonly: true, item_serializer: ->(value) { Base64.strict_encode64(value ? value.to_s : '') }
 
       def initialize(name)
         super
+
+        @data = {}
       end
 
-      def to_hash
-        result = super
-
-        result[:type] = @type.to_s if @type
-
-        result
-      end
-
-      protected
-
-      def convert_value(value)
-        Base64.strict_encode64(value ? value.to_s : '')
+      def api_version
+        'v1'
       end
     end
   end

@@ -7,7 +7,7 @@ module Sunstone
         super
       end
 
-      def namespace(value)
+      def namespace(value = nil)
         metadata.namespace = value if value
 
         metadata.namespace

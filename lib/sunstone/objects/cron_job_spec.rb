@@ -1,28 +1,21 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/job_template_spec'
 
 module Sunstone
   module Objects
-    class CronJobSpec
-      attr_accessor :concurrency_policy, :failed_jobs_history_limit, :schedule
-      attr_accessor :starting_deadline_seconds, :successful_jobs_history_limit, :suspend
-      attr_reader :job_template
+    class CronJobSpec < BaseObject
+      property :schedule
+      property :failed_jobs_history_limit
+      property :successful_jobs_history_limit
+      property :concurrency_policy
+      property :starting_deadline_seconds
+      property :suspend, boolean: true
+      property :job_template, readonly: true
 
       def initialize
+        super
+
         @job_template = JobTemplateSpec.new
-      end
-
-      def to_hash
-        result = {}
-
-        result[:schedule] = @schedule.to_s if @schedule
-        result[:failedJobsHistoryLimit] = @failed_jobs_history_limit if @failed_jobs_history_limit
-        result[:successfulJobsHistoryLimit] = @successful_jobs_history_limit if @successful_jobs_history_limit
-        result[:concurrencyPolicy] = @concurrency_policy if @concurrency_policy
-        result[:startingDeadlineSeconds] = @starting_deadline_seconds if @starting_deadline_seconds
-        result[:suspend] = @suspend if @suspend
-        result[:jobTemplate] = @job_template.to_hash
-
-        result
       end
     end
   end

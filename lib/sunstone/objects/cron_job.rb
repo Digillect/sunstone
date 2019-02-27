@@ -1,11 +1,12 @@
 require 'sunstone/objects/cron_job_spec'
-
 require 'sunstone/objects/pod_template_extensions'
 
 module Sunstone
   module Objects
     class CronJob < KubernetesObject
       include PodTemplateExtensions
+
+      property :spec, readonly: true
 
       attr_reader :spec
 
@@ -27,14 +28,6 @@ module Sunstone
 
       def schedule(cron_schedule)
         spec.schedule = cron_schedule
-      end
-
-      def to_hash
-        result = super
-
-        result[:spec] = @spec.to_hash
-
-        result
       end
     end
   end

@@ -1,6 +1,5 @@
 require 'sunstone/objects/kubernetes_object'
 require 'sunstone/objects/deployment_spec'
-
 require 'sunstone/objects/pod_template_owner'
 require 'sunstone/objects/pod_template_extensions'
 
@@ -10,7 +9,7 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      attr_reader :spec
+      property :spec, readonly: true
 
       def initialize(name)
         super
@@ -31,14 +30,6 @@ module Sunstone
 
       def replicas(number_of_replicas)
         spec.replicas = number_of_replicas if number_of_replicas
-      end
-
-      def to_hash
-        result = super
-
-        result[:spec] = @spec.to_hash
-
-        result
       end
     end
   end

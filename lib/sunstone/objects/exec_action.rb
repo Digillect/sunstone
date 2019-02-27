@@ -1,14 +1,14 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class ExecAction
-      attr_reader :command
+    class ExecAction < BaseObject
+      property :command, readonly: true
 
       def initialize(*command)
-        @command = command
-      end
+        super()
 
-      def to_hash
-        { command: @command.map(&:to_s) }
+        @command = command
       end
     end
   end

@@ -1,16 +1,18 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class RoleRef
-      attr_accessor :api_group, :kind, :name
+    class RoleRef < BaseObject
+      property :kind
+      property :name
+      property :api_group
 
       def initialize(name, kind, api_group)
+        super()
+
         @name = name
         @kind = kind
         @api_group = api_group
-      end
-
-      def to_hash
-        { kind: @kind.to_s, name: @name.to_s, apiGroup: @api_group.to_s }
       end
     end
   end

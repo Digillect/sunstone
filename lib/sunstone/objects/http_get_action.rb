@@ -1,12 +1,18 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/http_header'
 
 module Sunstone
   module Objects
-    class HttpGetAction
-      attr_accessor :host, :path, :port, :scheme
-      attr_reader :headers
+    class HttpGetAction < BaseObject
+      property :path
+      property :port
+      property :host
+      property :scheme
+      property :http_headers, readonly: true
 
       def initialize(path, port)
+        super()
+
         @path = path
         @port = port
 
@@ -14,16 +20,6 @@ module Sunstone
 
         @host = nil
         @scheme = nil
-      end
-
-      def to_hash
-        result = { path: @path.to_s, port: @port }
-
-        result[:host] = @host.to_s if @host
-        result[:scheme] = @scheme.to_s if @scheme
-        result[:httpHeaders] = @headers.map(&:to_hash) unless @headers.empty?
-
-        result
       end
     end
   end

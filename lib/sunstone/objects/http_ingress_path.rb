@@ -1,21 +1,17 @@
+require 'sunstone/objects/base_object'
 require 'sunstone/objects/ingress_backend'
 
 module Sunstone
   module Objects
-    class HTTPIngressPath
-      attr_reader :backend, :path
+    class HTTPIngressPath < BaseObject
+      property :backend, readonly: true
+      property :path
 
       def initialize(service_name, service_port, path = nil)
+        super()
+
         @backend = IngressBackend.new(service_name, service_port)
         @path = path
-      end
-
-      def to_hash
-        result = { backend: @backend.to_hash }
-
-        result[:path] = @path.to_s unless @path.blank?
-
-        result
       end
     end
   end

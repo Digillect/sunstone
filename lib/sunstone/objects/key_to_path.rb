@@ -1,20 +1,18 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class KeyToPath
-      attr_reader :key, :mode, :path
+    class KeyToPath < BaseObject
+      property :key
+      property :path
+      property :mode
 
       def initialize(key, path, mode = nil)
+        super()
+
         @key = key
         @path = path
         @mode = mode
-      end
-
-      def to_hash
-        result = { key: @key.to_s, path: @path.to_s }
-
-        result[:mode] = @mode unless @mode.blank?
-
-        result
       end
     end
   end

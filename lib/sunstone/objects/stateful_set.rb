@@ -10,7 +10,7 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      attr_reader :spec
+      property :spec, readonly: true
 
       def initialize(name)
         super
@@ -28,14 +28,6 @@ module Sunstone
         claim.instance_eval(block) if block_given?
 
         claim
-      end
-
-      def to_hash
-        result = super
-
-        result[:spec] = @spec.to_hash
-
-        result
       end
     end
   end

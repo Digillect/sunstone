@@ -1,15 +1,16 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class HttpHeader
-      attr_reader :name, :value
+    class HttpHeader < BaseObject
+      property :name
+      property :value
 
       def initialize(name, value)
+        super()
+
         @name = name
         @value = value
-      end
-
-      def to_hash
-        { name: @name.to_s, value: @value.to_s }
       end
     end
   end
