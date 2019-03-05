@@ -11,7 +11,7 @@ GEM
     awesome_print (1.8.0)
     builder (3.2.3)
     concurrent-ruby (1.1.4)
-    i18n (1.5.3)
+    i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
     minitest (5.11.3)
@@ -21,12 +21,12 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    parallel (1.13.0)
+    parallel (1.14.0)
     parser (2.6.0.0)
       ast (~> 2.4.0)
     powerpack (0.1.2)
     rainbow (3.0.0)
-    rake (12.3.0)
+    rake (12.3.2)
     recursive-open-struct (1.1.0)
     rubocop (0.62.0)
       jaro_winkler (~> 1.5.1)
