@@ -7,13 +7,13 @@ RUN gem install bundler
 RUN mkdir -p /data/input /data/output
 VOLUME /data/input /data/output
 
-COPY gems.* /tmp/
+COPY Gemfile Gemfile.lock /tmp/
 WORKDIR /tmp
 RUN bundle install --without development test
 
 COPY bin /app/bin/
 COPY lib /app/lib/
-COPY gems.* /app/
+COPY Gemfile Gemfile.lock /app/
 WORKDIR /app
 
 ENTRYPOINT ["/usr/bin/env", "ruby", "/app/bin/sunstone"]
