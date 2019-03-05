@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/Digillect/sunstone.svg?branch=master)](https://travis-ci.com/Digillect/sunstone)
 
-Ruby-style DSL preprocessor for Kubernetes resource manifests.
+Declarative language for Kubernetes resource manifests and Helm charts.
 
 ## Why
 
