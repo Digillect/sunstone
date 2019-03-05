@@ -31,55 +31,64 @@ class KubernetesObjectMetadataTest < Minitest::Test
     refute_empty sut
   end
 
-  def test_add_label_adds_label
+  def test_label_adds_label
     sut = Sunstone::Objects::KubernetesObjectMetadata.new
 
-    sut.add_label test: :value
+    sut.label test: :value
 
     assert_equal :value, sut.labels[:test]
   end
 
-  def test_add_labels_adds_labels
+  def test_labels_adds_labels
     sut = Sunstone::Objects::KubernetesObjectMetadata.new
 
-    sut.add_label test1: :value1, test2: :value2
+    sut.labels test1: :value1, test2: :value2
 
     assert_equal :value1, sut.labels[:test1]
     assert_equal :value2, sut.labels[:test2]
   end
 
-  def test_add_annotation_adds_annotation
+  def test_annotation_adds_annotation
     sut = Sunstone::Objects::KubernetesObjectMetadata.new
 
-    sut.add_annotation test: :value
+    sut.annotation test: :value
 
     assert_equal :value, sut.annotations[:test]
   end
 
-  def test_add_annotations_adds_annotations
+  def test_annotations_adds_annotations
     sut = Sunstone::Objects::KubernetesObjectMetadata.new
 
-    sut.add_annotations test1: :value1, test2: :value2
+    sut.annotations test1: :value1, test2: :value2
 
     assert_equal :value1, sut.annotations[:test1]
     assert_equal :value2, sut.annotations[:test2]
   end
 
-  def test_add_finalizer_adds_finalizer
+  def test_finalizer_adds_finalizer
     sut = Sunstone::Objects::KubernetesObjectMetadata.new
 
-    sut.add_finalizer :test
+    sut.finalizer :test
 
     assert_equal 1, sut.finalizers.length
     assert_equal :test, sut.finalizers.first
   end
 
+  def test_finalizers_adds_finalizer
+    sut = Sunstone::Objects::KubernetesObjectMetadata.new
+
+    sut.finalizers :test, :another_test
+
+    assert_equal 2, sut.finalizers.length
+    assert_equal %i[test another_test], sut.finalizers
+  end
+
   def test_serialization
     sut = Sunstone::Objects::KubernetesObjectMetadata.new :test
 
-    sut.add_label label: :label_value
-    sut.add_annotation annotation: :annotation_value
-    sut.add_finalizer :finalizer
+    sut.label label: :label_value
+    sut.annotation annotation: :annotation_value
+    sut.finalizer :finalizer
 
     expected = {
       name: 'test',

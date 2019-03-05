@@ -14,6 +14,8 @@ module Sunstone
         super
 
         @spec = CronJobSpec.new
+
+        pod_template_spec.restart_policy :OnFailure
       end
 
       def api_version

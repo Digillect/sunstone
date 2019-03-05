@@ -6,7 +6,7 @@ module Sunstone
       property :timeout_seconds
 
       def empty?
-        timeout_seconds.blank?
+        @timeout_seconds.blank?
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'sunstone/objects/base_object'
 require 'sunstone/objects/container'
-require 'sunstone/objects/local_object_reference_array'
+require 'sunstone/objects/local_object_reference'
 require 'sunstone/objects/volume_array'
 
 module Sunstone
@@ -26,13 +26,13 @@ module Sunstone
       property :termination_grace_period_seconds
       property :image_pull_secrets, readonly: true
       property :containers, readonly: true
-      property :init_containers,readonly: true
+      property :init_containers, readonly: true
       property :volumes, readonly: true
 
       def initialize
         super
 
-        @image_pull_secrets = LocalObjectReferenceArray.new
+        @image_pull_secrets = []
         @containers = []
         @init_containers = []
         @volumes = VolumeArray.new
@@ -65,6 +65,18 @@ module Sunstone
 
         container
       end
+
+      def image_pull_secrets(*names)
+        return @image_pull_secrets if values.empty?
+
+        names.each do |name|
+          @image_pull_secrets.push LocalObjectReference.new(name)
+        end
+
+        @image_pull_secrets
+      end
+
+      alias image_pull_secret image_pull_secrets
     end
   end
 end

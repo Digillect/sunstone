@@ -29,8 +29,12 @@ module Sunstone
         @session_affinity_config = SessionAffinityConfig.new
       end
 
-      def add_port(port, name: nil, node_port: nil, protocol: nil, target_port: nil)
-        @ports.push ServicePort.new(port, name, node_port, protocol, target_port)
+      def add_port(port, name: nil, node_port: nil, protocol: nil, target_port: nil, &block)
+        port = ServicePort.new(port, name, node_port, protocol, target_port)
+
+        port.instance_eval(&block) if block_given?
+
+        @ports.push port
       end
     end
   end

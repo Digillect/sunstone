@@ -20,8 +20,8 @@ module Sunstone
         @spec.selector.merge! labels
       end
 
-      def expose_default_http_port
-        @spec.add_port 80, name: :http
+      def expose_default_http_port(&block)
+        @spec.add_port(80, name: :http, &block)
       end
     end
   end

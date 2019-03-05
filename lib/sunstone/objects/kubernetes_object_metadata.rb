@@ -1,12 +1,18 @@
+require 'sunstone/objects/base_object'
+
 module Sunstone
   module Objects
-    class KubernetesObjectMetadata
-      attr_accessor :namespace
-      attr_reader :name, :labels, :annotations, :finalizers
+    class KubernetesObjectMetadata < BaseObject
+      property :name, readonly: true
+      property :namespace
+      property :labels, readonly: true
+      property :annotations, readonly: true
+      property :finalizers, readonly: true
 
       def initialize(name = nil)
+        super()
+
         @name = name
-        @namespace = nil
         @labels = {}
         @annotations = {}
         @finalizers = []
@@ -16,32 +22,27 @@ module Sunstone
         @name.blank? && @namespace.blank? && @labels.empty? && @annotations.empty? && @finalizers.empty?
       end
 
-      def add_label(keys_and_values = {})
+      def labels(keys_and_values = {})
+        return @labels if keys_and_values.empty?
+
         @labels.merge! keys_and_values
       end
 
-      def add_annotation(keys_and_values = {})
+      def annotations(keys_and_values = {})
+        return @annotations if keys_and_values.empty?
+
         @annotations.merge! keys_and_values
       end
 
-      alias add_labels add_label
-      alias add_annotations add_annotation
+      def finalizers(*finalizers)
+        return @finalizers if finalizers.empty?
 
-      def add_finalizer(finalizer)
-        @finalizers.push finalizer
+        @finalizers.concat finalizers
       end
 
-      def to_hash
-        result = {}
-
-        result[:name] = @name.to_s if @name
-        result[:namespace] = @namespace.to_s if @namespace
-        result[:labels] = @labels.transform_values(&:to_s) unless @labels.empty?
-        result[:annotations] = @annotations.transform_values(&:to_s) unless @annotations.empty?
-        result[:finalizers] = @finalizers.map(&:to_s) unless @finalizers.empty?
-
-        result
-      end
+      alias label labels
+      alias annotation annotations
+      alias finalizer finalizers
     end
   end
 end

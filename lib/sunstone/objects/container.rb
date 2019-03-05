@@ -51,8 +51,12 @@ module Sunstone
         @command.concat command_parts
       end
 
+      def expose_port(container_port, host_ip: nil, host_port: nil, name: nil, protocol: nil)
+        @ports.push ContainerPort.new(container_port, host_ip: host_ip, host_port: host_port, name: name, protocol: protocol)
+      end
+
       def expose_default_http_port
-        @ports.push ContainerPort.new(80, name: 'http')
+        expose_port 80, name: 'http'
       end
 
       def environment(&block)
