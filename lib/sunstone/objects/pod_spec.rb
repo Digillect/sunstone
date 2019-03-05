@@ -67,7 +67,7 @@ module Sunstone
       end
 
       def image_pull_secrets(*names)
-        return @image_pull_secrets if values.empty?
+        return @image_pull_secrets if names.empty?
 
         names.each do |name|
           @image_pull_secrets.push LocalObjectReference.new(name)
