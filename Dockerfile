@@ -7,14 +7,12 @@ RUN gem install bundler
 RUN mkdir -p /data/input /data/output
 VOLUME /data/input /data/output
 
-COPY Gemfile Gemfile.lock /tmp/
-WORKDIR /tmp
+COPY Gemfile Gemfile.lock /usr/local/sunstone/
+WORKDIR /usr/local/sunstone
 RUN bundle install --without development test
 
-COPY bin /app/bin/
-COPY lib /app/lib/
-COPY Gemfile Gemfile.lock /app/
-WORKDIR /app
+COPY bin/sunstone /usr/local/sunstone/bin/
+COPY bin/sunstone.sh /usr/local/bin/sunstone
+COPY lib /usr/local/sunstone/lib/
 
-ENTRYPOINT ["/usr/bin/env", "ruby", "/app/bin/sunstone"]
-CMD ["-po", "/data/output", "/data/input"]
+CMD ["/usr/local/bin/sunstone", "-po", "/data/output", "/data/input"]
