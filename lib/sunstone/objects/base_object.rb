@@ -29,6 +29,8 @@ module Sunstone
 
         if serializer
           serializer.call(self, value)
+        elsif value.is_a? OpenStruct
+          convert_property_value value.to_h, item_serializer
         elsif value.is_a? Hash
           if item_serializer
             value.transform_values { |item| item_serializer.call(item) }
@@ -117,7 +119,7 @@ module Sunstone
           define_method name do |&block|
             value = instance_variable_get(variable)
 
-            value.instance_eval(&block) if block_given?
+            value.instance_eval(&block) unless block.nil?
 
             value
           end
@@ -125,7 +127,7 @@ module Sunstone
           define_method name do |value = nil, &block|
             return instance_variable_get(variable) unless value
 
-            value.instance_eval(&block) if block_given?
+            value.instance_eval(&block) unless block.nil?
 
             instance_variable_set(variable, value)
           end

@@ -1,6 +1,7 @@
 require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/ingress_spec'
 require 'sunstone/objects/ingress_rule'
+require 'sunstone/objects/ingress_spec'
+require 'sunstone/objects/ingress_tls'
 
 module Sunstone
   module Objects
@@ -27,6 +28,10 @@ module Sunstone
         end
 
         @spec.rules.push rule
+      end
+
+      def add_tls(secret_name, *hosts)
+        @spec.tls.push IngressTLS.new(secret_name, *hosts)
       end
     end
   end

@@ -32,8 +32,12 @@ module Sunstone
         @spec.storage_class_name = value
       end
 
+      def storage_limit(volume)
+        @spec.storage_limit volume
+      end
+
       def storage_request(volume)
-        @spec.storage_request = volume
+        @spec.storage_request volume
       end
     end
   end

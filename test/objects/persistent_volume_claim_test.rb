@@ -21,7 +21,7 @@ class PersistentVolumeClaimTest < Minitest::Test
   def test_storage_requests
     @sut.storage_request '8Gi'
 
-    assert_equal '8Gi', @sut.to_hash[:spec][:resources][:request][:storage]
+    assert_equal '8Gi', @sut.to_hash[:spec][:resources][:requests][:storage]
   end
 
   def test_serialization
@@ -39,13 +39,15 @@ class PersistentVolumeClaimTest < Minitest::Test
         accessModes: ['ReadWriteOnce'],
         storageClassName: 'slow',
         resources: {
-          request: {
+          requests: {
             storage: '5Gi'
           }
         }
       }
     }
 
-    assert_equal_hash expected, @sut.to_hash
+    actual = @sut.to_hash
+
+    assert_equal_hash expected, actual
   end
 end

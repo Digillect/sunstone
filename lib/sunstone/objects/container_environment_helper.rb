@@ -21,12 +21,12 @@ module Sunstone
         end
       end
 
-      def add_config_map_key(name, config_map_name, key = nil, optional = nil)
-        @env.push EnvVar.new(name, EnvVarSource.new(ConfigMapKeySelector.new(key || name, config_map_name, optional)))
+      def add_config_map_key(name, config_map_name = nil, key: nil, optional: nil)
+        @env.push EnvVar.new(name, EnvVarSource.new(ConfigMapKeySelector.new(key || name, config_map_name || R.scope, optional)))
       end
 
-      def add_secret_key(name, secret_name, key = nil, optional = nil)
-        @env.push EnvVar.new(name, EnvVarSource.new(SecretKeySelector.new(key || name, secret_name, optional)))
+      def add_secret_key(name, secret_name = nil, key: nil, optional: nil)
+        @env.push EnvVar.new(name, EnvVarSource.new(SecretKeySelector.new(key || name, secret_name || R.scope, optional)))
       end
 
       def add_field(name, field_path, api_version = nil)
