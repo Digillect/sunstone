@@ -3,9 +3,13 @@ require 'base64'
 require 'sunstone/objects/secret'
 
 class SecretTest < Minitest::Test
-  def test_serialization
-    sut = Sunstone::Objects::Secret.new :test
+  attr_reader :sut
 
+  def setup
+    @sut = Sunstone::Objects::Secret.new :test
+  end
+
+  def test_serialization
     sut.set key: 'value'
 
     expected = {
@@ -19,6 +23,6 @@ class SecretTest < Minitest::Test
       }
     }
 
-    assert_equal expected, sut.to_hash
+    assert_equal expected.to_a, sut.to_hash.to_a
   end
 end

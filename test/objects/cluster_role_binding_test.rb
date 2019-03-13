@@ -2,16 +2,25 @@ require 'test_helper'
 require 'sunstone/objects/cluster_role_binding'
 
 class ClusterRoleBindingTest < Minitest::Test
-  def test_initialization
-    sut = Sunstone::Objects::ClusterRoleBinding.new :test
+  attr_reader :sut
 
-    assert_nil sut.role_ref
-    assert_empty sut.subjects
+  def setup
+    @sut = Sunstone::Objects::ClusterRoleBinding.new :test
+  end
+
+  def test_properties_and_methods
+    assert_property sut, :role_ref
+    assert_property sut, :subjects
+
+    assert_kind_of Array, sut.subjects
+
+    assert_respond_to sut, :cluster_role
+    assert_respond_to sut, :add_user
+    assert_respond_to sut, :add_group
+    assert_respond_to sut, :add_service_account
   end
 
   def test_cluster_role
-    sut = Sunstone::Objects::ClusterRoleBinding.new :test
-
     sut.cluster_role :users
 
     refute_nil sut.role_ref
@@ -21,8 +30,6 @@ class ClusterRoleBindingTest < Minitest::Test
   end
 
   def test_add_user
-    sut = Sunstone::Objects::ClusterRoleBinding.new :test
-
     sut.add_user :johndoe
 
     refute_empty sut.subjects
@@ -36,8 +43,6 @@ class ClusterRoleBindingTest < Minitest::Test
   end
 
   def test_serialization
-    sut = Sunstone::Objects::ClusterRoleBinding.new :test
-
     sut.cluster_role :users
     sut.add_user :johndoe
 

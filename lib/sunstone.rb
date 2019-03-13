@@ -21,6 +21,7 @@ module Sunstone
       autoload :Job
       autoload :Ingress
       autoload :PersistentVolumeClaim
+      autoload :Pod
       autoload :RoleBinding
       autoload :Secret
       autoload :Service

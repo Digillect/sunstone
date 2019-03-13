@@ -2,9 +2,13 @@ require 'test_helper'
 require 'sunstone/objects/config_map'
 
 class ConfigMapTest < Minitest::Test
-  def test_serialization
-    sut = Sunstone::Objects::ConfigMap.new :test
+  attr_reader :sut
 
+  def setup
+    @sut = Sunstone::Objects::ConfigMap.new :test
+  end
+
+  def test_serialization
     sut.set key: 'value'
 
     expected = {
