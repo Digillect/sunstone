@@ -8,9 +8,9 @@ Declarative language for Kubernetes resource manifests and Helm charts.
 
 Writing simple Kubernetes manifests is simple. Writing simple Helm charts is also simple. The moment
 you find out that you are writing the same YAML with slight modifications for your twenty third microservice
-you understand that you need more power Helm's GO templates can provide - enters Sunstone.
+you understand that you need more power Helm's Go templates can provide - enters Sunstone.
 
-Sunstone is the answer to the rigid Helm templates that do not allow you to create "real" macros or functions
+Sunstone is the addition to the Helm templates that do not allow you to create "real" macros or functions
 and where you have to write the same code with the different arguments over and over again and then, when refactoring,
 you have to be very careful and not to forget to change all affected files. Sunstone saves the time and increases
 manageability of the Kubernetes resource manifests by providing ability to setup common parameters for resource types,

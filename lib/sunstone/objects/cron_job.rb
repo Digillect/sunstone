@@ -8,8 +8,6 @@ module Sunstone
 
       property :spec, readonly: true
 
-      attr_reader :spec
-
       def initialize(name)
         super
 

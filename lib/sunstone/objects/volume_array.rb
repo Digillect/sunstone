@@ -1,10 +1,15 @@
 require 'sunstone/objects/config_map_volume_source'
+require 'sunstone/objects/empty_dir_volume_source'
+require 'sunstone/objects/host_path_volume_source'
+require 'sunstone/objects/nfs_volume_source'
+require 'sunstone/objects/persistent_volume_claim_volume_source'
+require 'sunstone/objects/secret_volume_source'
 require 'sunstone/objects/volume'
 
 module Sunstone
   module Objects
     class VolumeArray < Array
-      def config_map(volume_name, *args)
+      def config_map(volume_name, *args, &block)
         keys_and_paths = args.extract_options!
         config_map_name ||= args.first || R.scope
 
@@ -16,7 +21,54 @@ module Sunstone
           source.add_item key, path
         end
 
-        yield source if block_given?
+        add_volume volume_name, source, &block
+      end
+
+      def empty_dir(volume_name, size_limit: nil, in_memory: false, &block)
+        source = EmptyDirVolumeSource.new size_limit, in_memory ? 'Memory' : nil
+
+        add_volume volume_name, source, &block
+      end
+
+      def host_path(volume_name, path, type: nil, &block)
+        source = HostPathVolumeSource.new path, type
+
+        add_volume volume_name, source, &block
+      end
+
+      def nfs(volume_name, server, path, readonly: nil, &block)
+        source = NFSVolumeSource.new server, path, readonly
+
+        add_volume volume_name, source, &block
+      end
+
+      def persistent_volume_claim(volume_name, claim_name, readonly: nil, &block)
+        source = PersistentVolumeClaimVolumeSource.new claim_name, readonly
+
+        add_volume volume_name, source, &block
+      end
+
+      alias pvc persistent_volume_claim
+
+      def secret(volume_name, *args, &block)
+        keys_and_paths = args.extract_options!
+        secret_name ||= args.first || R.scope
+
+        raise 'Secret name must be specified or scope must be active' if secret_name.blank?
+
+        source = SecretVolumeSource.new secret_name
+
+        keys_and_paths.each_pair do |key, path|
+          source.add_item key, path
+        end
+
+        add_volume volume_name, source, &block
+      end
+
+      private
+
+      def add_volume(volume_name, source, &block)
+        source.instance_eval(&block) unless block.nil?
 
         volume = Volume.new volume_name, source
 

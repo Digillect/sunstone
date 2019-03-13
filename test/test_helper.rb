@@ -9,6 +9,8 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/great_expectations'
 
+require 'assertions'
+
 MiniTest::Reporters.use!
 
 Sunstone.eager_load!
