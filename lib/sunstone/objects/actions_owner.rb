@@ -12,9 +12,9 @@ module Sunstone
       extend ActiveSupport::Concern
 
       included do
-        property :exec, readonly: true
-        property :http_get, readonly: true
-        property :tcp_socket, readonly: true
+        property :exec, ExecAction, initialize: false
+        property :http_get, HttpGetAction, initialize: false
+        property :tcp_socket, TcpSocketAction, initialize: false
       end
 
       def action_empty?

@@ -1,12 +1,29 @@
-require 'ostruct'
+require 'sunstone/objects/introspection/property_descriptor'
+require 'sunstone/objects/introspection/property_factory'
 
 module Sunstone
   module Objects
     class BaseObject
       def initialize
         self.class.properties.each do |property|
-          instance_variable_set(property.variable, nil)
+          value = property.initial_value
+
+          instance_variable_set(property.variable, value)
         end
+      end
+
+      def empty?
+        self.class.properties.each do |property|
+          next unless property.test_emptiness?
+
+          value = instance_variable_get property.value
+
+          next if value_is_empty? value
+
+          return false
+        end
+
+        true
       end
 
       def to_hash
@@ -23,9 +40,15 @@ module Sunstone
 
       private
 
+      def value_is_empty?(value)
+        return true if value.nil?
+        return true if !value.is_a?(String) && value.respond_to?('empty?') && value.empty?
+
+        false
+      end
+
       def convert_property_value(value, serializer = nil, item_serializer = nil)
-        return nil if value.nil?
-        return nil if !value.is_a?(String) && value.respond_to?('empty?') && value.empty?
+        return nil if value_is_empty? value
 
         if serializer
           serializer.call(self, value)
@@ -79,63 +102,19 @@ module Sunstone
         result.reverse.flatten
       end
 
-      def self.property(name, boolean: false, readonly: false, serialized_name: nil, serializer: nil, item_serializer: nil)
-        name = name.to_sym
-        string_name = name.to_s
-        variable = "@#{string_name}".to_sym
-        serialized_name ||= string_name.camelize(:lower)
+      def self.property(name, klass = nil, item_klass = nil, readonly: false, serialized_name: nil, serializer: nil, item_serializer: nil)
+        prop = Introspection::PropertyDescriptor.new(name, klass, item_klass, serialized_name: serialized_name, boolean: boolean, readonly: readonly)
 
-        raise "Property #{string_name} is already defined in class #{self.name}" if properties.any? { |p| p.name == name }
+        raise "Property #{prop.string_name} is already defined in class #{self.name}" if properties.any? { |p| p.name == prop.name }
 
-        class_properties << OpenStruct.new(
-          name: name,
-          variable: variable,
-          serialized_name: serialized_name.to_sym,
-          serializer: serializer,
-          item_serializer: item_serializer
-        )
+        prop.serializer = serializer
+        prop.item_serializer = item_serializer
 
-        if boolean
-          define_method name do |value = nil|
-            return instance_variable_get(variable) unless value
+        class_properties << prop
 
-            instance_variable_set(variable, !!value)
-          end
+        factory = Introspection::PropertyFactory.new prop
 
-          define_method "#{string_name}?".to_sym do
-            !!instance_variable_get(variable)
-          end
-
-          unless readonly
-            define_method "#{string_name}=".to_sym do |value|
-              instance_variable_set(variable, !!value)
-            end
-
-            define_method "#{string_name}!".to_sym do
-              instance_variable_set(variable, true)
-            end
-          end
-        elsif readonly
-          define_method name do |&block|
-            value = instance_variable_get(variable)
-
-            value.instance_eval(&block) unless block.nil?
-
-            value
-          end
-        else
-          define_method name do |value = nil, &block|
-            return instance_variable_get(variable) unless value
-
-            value.instance_eval(&block) unless block.nil?
-
-            instance_variable_set(variable, value)
-          end
-
-          define_method "#{string_name}=".to_sym do |value|
-            instance_variable_set(variable, value)
-          end
-        end
+        factory.create_methods self
       end
     end
   end
