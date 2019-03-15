@@ -7,13 +7,11 @@ module Sunstone
     class Secret < KubernetesObject
       include ConfigMapOrSecret
 
-      property :type
-      property :data, readonly: true, item_serializer: ->(value) { Base64.strict_encode64(value ? value.to_s : '') }
+      property :type, String
+      property :data, Hash, item_serializer: ->(value) { Base64.strict_encode64(value ? value.to_s : '') }
 
       def initialize(name)
         super
-
-        @data = {}
       end
 
       def api_version

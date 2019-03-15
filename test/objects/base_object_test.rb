@@ -56,7 +56,7 @@ class BaseObjectTest < Minitest::Test
 
   def test_property_declaration
     klass = Class.new(Sunstone::Objects::BaseObject) do
-      property :name
+      property :name, String
     end
 
     sut = klass.new
@@ -67,7 +67,7 @@ class BaseObjectTest < Minitest::Test
 
   def test_boolean_property_declaration
     klass = Class.new(Sunstone::Objects::BaseObject) do
-      property :name, boolean: true
+      property :name, TrueClass
     end
 
     sut = klass.new
@@ -80,7 +80,7 @@ class BaseObjectTest < Minitest::Test
 
   def test_readonly_property_declaration
     klass = Class.new(Sunstone::Objects::BaseObject) do
-      property :items, readonly: true
+      property :items, Array
     end
 
     sut = klass.new
@@ -119,6 +119,44 @@ class BaseObjectTest < Minitest::Test
     sut = klass.new
 
     assert_nil sut.name
+  end
+
+  def test_empty_for_fresh_instance
+    klass = Class.new(Sunstone::Objects::BaseObject) do
+      property :value, Integer
+    end
+
+    sut = klass.new
+
+    assert_empty sut
+  end
+
+  def test_empty_when_not_empty
+    klass = Class.new(Sunstone::Objects::BaseObject) do
+      property :value, Integer
+    end
+
+    sut = klass.new
+
+    sut.value = 42
+
+    refute_empty sut
+  end
+
+  def test_empty_with_extra_properties_empty
+    klass = Class.new(Sunstone::Objects::BaseObject) do
+      property :value, Integer
+
+      protected
+
+      def extra_properties_empty?
+        false
+      end
+    end
+
+    sut = klass.new
+
+    refute_empty sut
   end
 
   def test_object_serialization

@@ -4,8 +4,8 @@ require 'sunstone/objects/ingress_backend'
 module Sunstone
   module Objects
     class HTTPIngressPath < BaseObject
-      property :backend, readonly: true
-      property :path
+      property :backend, IngressBackend, initialize: false
+      property :path, String
 
       def initialize(service_name, service_port, path = nil)
         super()

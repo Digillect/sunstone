@@ -3,8 +3,8 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class ResourceFieldSelector < BaseObject
-      property :resource
-      property :container_name
+      property :resource, String
+      property :container_name, String
       property :divisor
 
       def initialize(resource, container_name = nil, divisor = nil)

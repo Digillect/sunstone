@@ -3,8 +3,8 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class ObjectFieldSelector < BaseObject
-      property :field_path
-      property :api_version
+      property :field_path, String
+      property :api_version, String
 
       def initialize(field_path, api_version = nil)
         super()

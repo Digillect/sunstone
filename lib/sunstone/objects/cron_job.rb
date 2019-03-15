@@ -6,12 +6,10 @@ module Sunstone
     class CronJob < KubernetesObject
       include PodTemplateExtensions
 
-      property :spec, readonly: true
+      property :spec, CronJobSpec
 
       def initialize(name)
         super
-
-        @spec = CronJobSpec.new
 
         pod_spec.restart_policy :OnFailure
       end

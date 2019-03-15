@@ -4,12 +4,10 @@ require 'sunstone/objects/persistent_volume_claim_spec'
 module Sunstone
   module Objects
     class PersistentVolumeClaim < KubernetesObject
-      property :spec, readonly: true
+      property :spec, PersistentVolumeClaimSpec
 
       def initialize(name)
         super
-
-        @spec = PersistentVolumeClaimSpec.new
       end
 
       def api_version

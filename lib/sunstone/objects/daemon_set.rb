@@ -9,12 +9,10 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      property :spec, readonly: true
+      property :spec, DaemonSetSpec
 
       def initialize(name)
         super
-
-        @spec = DaemonSetSpec.new
       end
 
       def api_version

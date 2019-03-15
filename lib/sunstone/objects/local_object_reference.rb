@@ -3,7 +3,7 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class LocalObjectReference < BaseObject
-      property :name
+      property :name, String
 
       def initialize(name)
         super()

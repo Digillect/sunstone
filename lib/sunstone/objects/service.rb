@@ -4,12 +4,10 @@ require 'sunstone/objects/service_spec'
 module Sunstone
   module Objects
     class Service < KubernetesObject
-      property :spec, readonly: true
+      property :spec, ServiceSpec
 
       def initialize(name)
         super
-
-        @spec = ServiceSpec.new
       end
 
       def api_version

@@ -5,19 +5,8 @@ require 'sunstone/objects/pod_affinity_term'
 module Sunstone
   module Objects
     class PodAffinity < BaseObject
-      property :preferred, readonly: true, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
-      property :required, readonly: true, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
-
-      def initialize
-        super
-
-        @preferred = []
-        @required = []
-      end
-
-      def empty?
-        @preferred.empty? && @required.empty?
-      end
+      property :preferred, Array, WeightedPodAffinityTerm, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
+      property :required, Array, PodAffinityTerm, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
 
       def add_preferred_term(&block)
         term = WeightedPodAffinityTerm.new

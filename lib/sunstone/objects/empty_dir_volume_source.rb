@@ -3,7 +3,7 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class EmptyDirVolumeSource < BaseObject
-      property :medium
+      property :medium, String
       property :size_limit
 
       def initialize(size_limit = nil, medium = nil)

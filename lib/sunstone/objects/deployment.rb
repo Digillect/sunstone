@@ -9,12 +9,10 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      property :spec, readonly: true
+      property :spec, DeploymentSpec
 
       def initialize(name)
         super
-
-        @spec = DeploymentSpec.new
       end
 
       def api_version

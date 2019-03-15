@@ -5,15 +5,14 @@ module Sunstone
   module Objects
     class SecretVolumeSource < BaseObject
       property :secret_name, readonly: true
-      property :items, readonly: true
-      property :default_mode
-      property :optional, boolean: true
+      property :items, Array, KeyToPath
+      property :default_mode, Integer
+      property :optional, TrueClass
 
-      def initialize(config_map_name)
+      def initialize(secret_name)
         super()
 
-        @name = config_map_name
-        @items = []
+        @secret_name = secret_name
       end
 
       def add_item(key, path, mode = nil)

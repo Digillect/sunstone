@@ -3,10 +3,10 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class Subject < BaseObject
-      property :kind, readonly: true
-      property :name, readonly: true
-      property :namespace, readonly: true
-      property :api_group, readonly: true
+      property :kind, String
+      property :name, String
+      property :namespace, String
+      property :api_group, String
 
       def initialize(kind, name, namespace = nil, api_group = nil)
         super()

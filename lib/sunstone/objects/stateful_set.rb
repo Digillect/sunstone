@@ -10,12 +10,10 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      property :spec, readonly: true
+      property :spec, StatefulSetSpec
 
       def initialize(name)
         super
-
-        @spec = StatefulSetSpec.new
       end
 
       def api_version

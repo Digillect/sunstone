@@ -4,15 +4,8 @@ require 'sunstone/objects/label_selector_requirement'
 module Sunstone
   module Objects
     class LabelSelector < BaseObject
-      property :match_expressions, readonly: true
-      property :match_labels, readonly: true
-
-      def initialize
-        super
-
-        @match_expressions = []
-        @match_labels = {}
-      end
+      property :match_expressions, Array, LabelSelectorRequirement
+      property :match_labels, Hash
 
       def in(key, *values)
         @match_expressions.push LabelSelectorRequirement.new(key, LabelSelectorRequirement::IN, values)
@@ -32,10 +25,6 @@ module Sunstone
 
       def equals(labels = {})
         @match_labels.merge! labels
-      end
-
-      def empty?
-        @match_expressions.empty? && @match_labels.empty?
       end
     end
   end

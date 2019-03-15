@@ -3,9 +3,9 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class RoleRef < BaseObject
-      property :kind
-      property :name
-      property :api_group
+      property :kind, String
+      property :name, String
+      property :api_group, String
 
       def initialize(name, kind, api_group)
         super()

@@ -25,9 +25,9 @@ module Sunstone
           @readonly = readonly
           @test_emptiness = test_emptiness
 
-          @boolean = boolean
-          @array = nil
           @scalar = nil
+          @boolean = nil
+          @array = nil
         end
 
         def initialize?
@@ -84,7 +84,7 @@ module Sunstone
         end
 
         def deduct_scalar
-          boolean? || @klass <= Numeric || @klass == String || @klass == Symbol
+          @klass.nil? || boolean? || @klass <= Numeric || @klass == String || @klass == Symbol
         end
       end
     end

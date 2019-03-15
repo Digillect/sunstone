@@ -3,7 +3,7 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class PodReadinessGate < BaseObject
-      property :condition_type
+      property :condition_type, String
 
       def initialize(condition_type = nil)
         super()

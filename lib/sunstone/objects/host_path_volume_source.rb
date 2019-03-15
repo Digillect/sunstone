@@ -3,8 +3,8 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class HostPathVolumeSource < BaseObject
-      property :path
-      property :type
+      property :path, String
+      property :type, String
 
       def initialize(path, type = nil)
         super()

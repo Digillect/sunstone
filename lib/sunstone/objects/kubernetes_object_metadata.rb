@@ -3,23 +3,16 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class KubernetesObjectMetadata < BaseObject
-      property :name, readonly: true
-      property :namespace
-      property :labels, readonly: true
-      property :annotations, readonly: true
-      property :finalizers, readonly: true
+      property :name, String, readonly: true
+      property :namespace, String
+      property :labels, Hash
+      property :annotations, Hash
+      property :finalizers, Array, String
 
       def initialize(name = nil)
         super()
 
         @name = name
-        @labels = {}
-        @annotations = {}
-        @finalizers = []
-      end
-
-      def empty?
-        @name.blank? && @namespace.blank? && @labels.empty? && @annotations.empty? && @finalizers.empty?
       end
 
       def labels(keys_and_values = {})

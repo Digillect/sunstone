@@ -4,17 +4,7 @@ require 'sunstone/objects/node_selector_term'
 module Sunstone
   module Objects
     class NodeSelector < BaseObject
-      property :node_selector_terms, readonly: true
-
-      def initialize
-        super
-
-        @node_selector_terms = []
-      end
-
-      def empty?
-        @node_selector_terms.empty?
-      end
+      property :node_selector_terms, Array, NodeSelectorTerm
 
       def add_term(&block)
         term = NodeSelectorTerm.new

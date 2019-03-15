@@ -5,15 +5,8 @@ require 'sunstone/objects/pod_spec'
 module Sunstone
   module Objects
     class PodTemplateSpec < BaseObject
-      property :metadata, readonly: true
-      property :spec, readonly: true
-
-      def initialize
-        super
-
-        @metadata = KubernetesObjectMetadata.new
-        @spec = PodSpec.new
-      end
+      property :metadata, KubernetesObjectMetadata
+      property :spec, PodSpec
     end
   end
 end

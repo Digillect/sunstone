@@ -3,7 +3,7 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class ExecAction < BaseObject
-      property :command, readonly: true
+      property :command, Array, String, initialize: false
 
       def initialize(*command)
         super()

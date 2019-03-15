@@ -3,9 +3,9 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class KeyToPath < BaseObject
-      property :key
-      property :path
-      property :mode
+      property :key, String
+      property :path, String
+      property :mode, Integer
 
       def initialize(key, path, mode = nil)
         super()

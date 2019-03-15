@@ -28,6 +28,10 @@ module Sunstone
 
       protected
 
+      def extra_properties_empty?
+        @extended_resources.empty?
+      end
+
       def post_serialize_properties(result)
         result.merge! @extended_resources.transform_keys(&:to_sym)
       end

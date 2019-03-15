@@ -5,15 +5,11 @@ module Sunstone
     class Probe < BaseObject
       include ActionsOwner
 
-      property :failure_threshold
-      property :initial_delay_seconds
-      property :period_seconds
-      property :success_threshold
-      property :timeout
-
-      def empty?
-        action_empty? && @failure_threshold.nil? && @initial_delay.nil? && @period.nil? && @success_threshold.nil? && @timeout.nil?
-      end
+      property :failure_threshold, Integer
+      property :initial_delay_seconds, Integer
+      property :period_seconds, Integer
+      property :success_threshold, Integer
+      property :timeout_seconds, Integer
     end
   end
 end

@@ -4,7 +4,7 @@ module Sunstone
   module Objects
     class TcpSocketAction < BaseObject
       property :port
-      property :host
+      property :host, String
 
       def initialize(port, host = nil)
         super()

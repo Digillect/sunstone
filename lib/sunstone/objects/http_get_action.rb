@@ -4,22 +4,17 @@ require 'sunstone/objects/http_header'
 module Sunstone
   module Objects
     class HttpGetAction < BaseObject
-      property :path
+      property :path, String
       property :port
-      property :host
-      property :scheme
-      property :http_headers, readonly: true
+      property :host, String
+      property :scheme, String
+      property :http_headers, Array, HttpHeader
 
       def initialize(path, port)
         super()
 
         @path = path
         @port = port
-
-        @headers = []
-
-        @host = nil
-        @scheme = nil
       end
 
       def headers(names_and_values = {})

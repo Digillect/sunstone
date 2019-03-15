@@ -5,15 +5,8 @@ require 'sunstone/objects/job_spec'
 module Sunstone
   module Objects
     class JobTemplateSpec < BaseObject
-      property :metadata, readonly: true
-      property :spec, readonly: true
-
-      def initialize
-        super
-
-        @metadata = KubernetesObjectMetadata.new
-        @spec = JobSpec.new
-      end
+      property :metadata, KubernetesObjectMetadata
+      property :spec, JobSpec
     end
   end
 end

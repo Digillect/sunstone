@@ -7,12 +7,10 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      property :spec, readonly: true
+      property :spec, JobSpec
 
       def initialize(name)
         super
-
-        @spec = JobSpec.new
 
         pod_spec.restart_policy :OnFailure
       end

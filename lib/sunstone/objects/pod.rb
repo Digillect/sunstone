@@ -4,12 +4,10 @@ require 'sunstone/objects/pod_spec'
 module Sunstone
   module Objects
     class Pod < KubernetesObject
-      property :spec, readonly: true
+      property :spec, PodSpec
 
       def initialize(name)
         super
-
-        @spec = PodSpec.new
       end
 
       def api_version

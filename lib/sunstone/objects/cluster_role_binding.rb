@@ -5,14 +5,8 @@ require 'sunstone/objects/subject'
 module Sunstone
   module Objects
     class ClusterRoleBinding < KubernetesObject
-      property :role_ref, readonly: true
-      property :subjects, readonly: true
-
-      def initialize(name)
-        super
-
-        @subjects = []
-      end
+      property :role_ref, RoleRef, initialize: false
+      property :subjects, Array, Subject
 
       def api_version
         'rbac.authorization.k8s.io/v1'

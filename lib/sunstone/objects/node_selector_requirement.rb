@@ -3,9 +3,9 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class NodeSelectorRequirement < BaseObject
-      property :key, readonly: true
-      property :operator, readonly: true
-      property :values, readonly: true
+      property :key, String, readonly: true
+      property :operator, String, readonly: true
+      property :values, Array, initialize: false, test_emptiness: false
 
       def initialize(key, operator, values = nil)
         @key = key

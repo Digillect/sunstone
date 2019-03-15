@@ -11,44 +11,32 @@ require 'sunstone/objects/volume_mount'
 module Sunstone
   module Objects
     class Container < BaseObject
-      property :name, readonly: true
-      property :args, readonly: true
-      property :command, readonly: true
-      property :working_dir
-      property :image
-      property :image_pull_policy
-      property :env, readonly: true
-      property :env_from, readonly: true
-      property :liveness_probe, readonly: true
-      property :readiness_probe, readonly: true
-      property :lifecycle, readonly: true
-      property :resources, readonly: true
-      property :stdin, boolean: true
-      property :stdin_once, boolean: true
-      property :ports, readonly: true
-      property :security_context, readonly: true
-      property :termination_message_path
-      property :termination_message_policy
-      property :tty, boolean: true
-      property :volume_devices, readonly: true
-      property :volume_mounts, readonly: true
+      property :name, String, readonly: true
+      property :args, Array, String
+      property :command, Array, String
+      property :working_dir, String
+      property :image, String
+      property :image_pull_policy, String
+      property :env, Array, EnvVar
+      property :env_from, Array, EnvFromSource
+      property :liveness_probe, Probe
+      property :readiness_probe, Probe
+      property :lifecycle, Lifecycle
+      property :resources, ResourceRequirements
+      property :stdin, TrueClass
+      property :stdin_once, TrueClass
+      property :ports, Array, ContainerPort
+      property :security_context, SecurityContext
+      property :termination_message_path, String
+      property :termination_message_policy, String
+      property :tty, TrueClass
+      property :volume_devices, Array, VolumeDevice
+      property :volume_mounts, Array, VolumeMount
 
       def initialize(name)
         super()
 
-        @args = []
-        @command = []
-        @env = []
-        @env_from = []
-        @lifecycle = Lifecycle.new
-        @liveness_probe = Probe.new
         @name = name
-        @ports = []
-        @readiness_probe = Probe.new
-        @resources = ResourceRequirements.new
-        @security_context = SecurityContext.new
-        @volume_devices = []
-        @volume_mounts = []
       end
 
       def args(*args)
@@ -63,12 +51,16 @@ module Sunstone
         @command.concat command_parts
       end
 
-      def expose_port(container_port, host_ip: nil, host_port: nil, name: nil, protocol: nil)
-        @ports.push ContainerPort.new(container_port, host_ip: host_ip, host_port: host_port, name: name, protocol: protocol)
+      def expose_port(container_port, host_ip: nil, host_port: nil, name: nil, protocol: nil, &block)
+        port = ContainerPort.new(container_port, host_ip: host_ip, host_port: host_port, name: name, protocol: protocol)
+
+        port.instance_eval(&block) unless block.nil?
+
+        @ports.push port
       end
 
-      def expose_default_http_port
-        expose_port 80, name: 'http'
+      def expose_default_http_port(&block)
+        expose_port 80, name: 'http', &block
       end
 
       def environment(&block)

@@ -3,19 +3,8 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class Capabilities < BaseObject
-      property :add, readonly: true
-      property :drop, readonly: true
-
-      def initialize
-        super
-
-        @add = []
-        @drop = []
-      end
-
-      def empty?
-        @add.empty? && @drop.empty?
-      end
+      property :add, Array, String
+      property :drop, Array, String
 
       def add(*values)
         return @add if values.empty?

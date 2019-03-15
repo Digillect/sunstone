@@ -1,20 +1,14 @@
 require 'sunstone/objects/base_object'
 require 'sunstone/objects/ingress_backend'
+require 'sunstone/objects/ingress_rule'
+require 'sunstone/objects/ingress_tls'
 
 module Sunstone
   module Objects
     class IngressSpec < BaseObject
-      property :backend, readonly: true
-      property :tls, readonly: true
-      property :rules, readonly: true
-
-      def initialize
-        super
-
-        @backend = IngressBackend.new
-        @rules = []
-        @tls = []
-      end
+      property :backend, IngressBackend
+      property :tls, Array, IngressTLS
+      property :rules, Array, IngressRule
     end
   end
 end

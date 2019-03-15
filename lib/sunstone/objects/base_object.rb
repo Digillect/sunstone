@@ -13,10 +13,14 @@ module Sunstone
       end
 
       def empty?
+        if respond_to?(:extra_properties_empty?, true)
+          return false unless extra_properties_empty?
+        end
+
         self.class.properties.each do |property|
           next unless property.test_emptiness?
 
-          value = instance_variable_get property.value
+          value = instance_variable_get property.variable
 
           next if value_is_empty? value
 
@@ -42,7 +46,8 @@ module Sunstone
 
       def value_is_empty?(value)
         return true if value.nil?
-        return true if !value.is_a?(String) && value.respond_to?('empty?') && value.empty?
+        # return true if !value.is_a?(String) && value.respond_to?('empty?') && value.empty?
+        return true if value.respond_to?('empty?') && value.empty?
 
         false
       end
@@ -102,8 +107,12 @@ module Sunstone
         result.reverse.flatten
       end
 
-      def self.property(name, klass = nil, item_klass = nil, readonly: false, serialized_name: nil, serializer: nil, item_serializer: nil)
-        prop = Introspection::PropertyDescriptor.new(name, klass, item_klass, serialized_name: serialized_name, boolean: boolean, readonly: readonly)
+      def self.property(name, klass = nil, item_klass = nil, readonly: false, initialize: nil, test_emptiness: true, serialized_name: nil, serializer: nil, item_serializer: nil)
+        prop = Introspection::PropertyDescriptor.new(
+          name,
+          klass, item_klass,
+          serialized_name: serialized_name,
+          initialize: initialize, test_emptiness: test_emptiness, readonly: readonly)
 
         raise "Property #{prop.string_name} is already defined in class #{self.name}" if properties.any? { |p| p.name == prop.name }
 

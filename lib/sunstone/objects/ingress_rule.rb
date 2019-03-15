@@ -5,14 +5,13 @@ require 'sunstone/objects/http_ingress_path'
 module Sunstone
   module Objects
     class IngressRule < BaseObject
-      property :host, readonly: true
-      property :http, readonly: true
+      property :host, String, readonly: true
+      property :http, HTTPIngressRuleValue
 
       def initialize(host)
         super()
 
         @host = host
-        @http = HTTPIngressRuleValue.new
       end
 
       def add_path(service_name, service_port, path = nil)

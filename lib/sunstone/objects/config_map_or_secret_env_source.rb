@@ -4,7 +4,7 @@ module Sunstone
   module Objects
     class ConfigMapOrSecretEnvSource < BaseObject
       property :name
-      property :optional, boolean: true, readonly: true
+      property :optional, TrueClass, readonly: true
 
       def initialize(name, optional = nil)
         raise ArgumentError, 'Name must be specified' if name.blank?

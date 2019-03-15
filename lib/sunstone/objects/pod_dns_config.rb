@@ -4,21 +4,9 @@ require 'sunstone/objects/pod_dns_config_option'
 module Sunstone
   module Objects
     class PodDNSConfig < BaseObject
-      property :nameservers, readonly: true
-      property :options, readonly: true
-      property :searches, readonly: true
-
-      def initialize
-        super
-
-        @nameservers = []
-        @options = []
-        @searches = []
-      end
-
-      def empty?
-        @nameservers.empty? && @options.empty? && @searches.empty?
-      end
+      property :nameservers, Array, String
+      property :options, Array, PodDNSConfigOption
+      property :searches, Array, String
 
       def nameservers(*values)
         return @nameservers if values.empty?

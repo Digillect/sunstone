@@ -4,16 +4,15 @@ require 'sunstone/objects/key_to_path'
 module Sunstone
   module Objects
     class ConfigMapVolumeSource < BaseObject
-      property :name, readonly: true
-      property :items, readonly: true
-      property :default_mode
-      property :optional, boolean: true
+      property :name, String, readonly: true
+      property :items, Array
+      property :default_mode, Integer
+      property :optional, TrueClass
 
       def initialize(config_map_name)
         super()
 
         @name = config_map_name
-        @items = []
       end
 
       def add_item(key, path, mode = nil)

@@ -12,51 +12,35 @@ require 'sunstone/objects/volume_array'
 module Sunstone
   module Objects
     class PodSpec < BaseObject
-      property :active_deadline_seconds
-      property :affinity, readonly: true
-      property :automount_service_account_token, boolean: true
-      property :dns_config, readonly: true
-      property :dns_policy
-      property :enable_service_links, boolean: true
-      property :host_aliases, readonly: true
-      property :host_ipc, boolean: true, serialized_name: :hostIPC
-      property :host_network, boolean: true
-      property :host_pid, boolean: true, serialized_name: :hostPID
-      property :hostname
-      property :node_name
-      property :node_selector
-      property :priority
-      property :priority_class_name
-      property :readiness_gates, readonly: true
-      property :restart_policy
-      property :runtime_class_name
-      property :security_context, readonly: true
-      property :scheduler_name
-      property :service_account_name
-      property :share_process_namespace, boolean: true
-      property :subdomain
-      property :termination_grace_period_seconds
-      property :tolerations, readonly: true
-      property :image_pull_secrets, readonly: true
-      property :containers, readonly: true
-      property :init_containers, readonly: true
-      property :volumes, readonly: true
-
-      def initialize
-        super
-
-        @affinity = Affinity.new
-        @dns_config = PodDNSConfig.new
-        @host_aliases = []
-        @image_pull_secrets = []
-        @node_selector = {}
-        @readiness_gates = []
-        @security_context = PodSecurityContext.new
-        @tolerations = []
-        @containers = []
-        @init_containers = []
-        @volumes = VolumeArray.new
-      end
+      property :active_deadline_seconds, Integer
+      property :affinity, Affinity
+      property :automount_service_account_token, TrueClass
+      property :dns_config, PodDNSConfig
+      property :dns_policy, String
+      property :enable_service_links, TrueClass
+      property :host_aliases, Array, HostAlias
+      property :host_ipc, TrueClass, serialized_name: :hostIPC
+      property :host_network, TrueClass
+      property :host_pid, TrueClass, serialized_name: :hostPID
+      property :hostname, String
+      property :node_name, String
+      property :node_selector, Hash
+      property :priority, Integer
+      property :priority_class_name, String
+      property :readiness_gates, Array, PodReadinessGate
+      property :restart_policy, String
+      property :runtime_class_name, String
+      property :security_context, PodSecurityContext
+      property :scheduler_name, String
+      property :service_account_name, String
+      property :share_process_namespace, TrueClass
+      property :subdomain, String
+      property :termination_grace_period_seconds, Integer
+      property :tolerations, Array, Toleration
+      property :image_pull_secrets, Array, LocalObjectReference
+      property :containers, Array, Container
+      property :init_containers, Array, Container
+      property :volumes, VolumeArray
 
       def container(name = :main, &block)
         container = @containers.find { |c| c.name == name }

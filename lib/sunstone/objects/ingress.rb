@@ -6,12 +6,10 @@ require 'sunstone/objects/ingress_tls'
 module Sunstone
   module Objects
     class Ingress < KubernetesObject
-      property :spec, readonly: true
+      property :spec, IngressSpec
 
       def initialize(name)
         super
-
-        @spec = IngressSpec.new
       end
 
       def api_version

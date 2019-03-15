@@ -3,8 +3,8 @@ require 'sunstone/objects/base_object'
 module Sunstone
   module Objects
     class VolumeDevice < BaseObject
-      property :name
-      property :device_path
+      property :name, String
+      property :device_path, String
 
       def initialize(name, device_path)
         super()

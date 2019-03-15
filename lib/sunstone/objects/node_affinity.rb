@@ -5,19 +5,8 @@ require 'sunstone/objects/node_selector'
 module Sunstone
   module Objects
     class NodeAffinity < BaseObject
-      property :preferred, readonly: true, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
-      property :required, readonly: true, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
-
-      def initialize
-        super
-
-        @preferred = []
-        @required = NodeSelector.new
-      end
-
-      def empty?
-        @preferred.empty? && @required.empty?
-      end
+      property :preferred, Array, PreferredSchedulingTerm, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
+      property :required, NodeSelector, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
 
       def add_preferred_term(&block)
         term = PreferredSchedulingTerm.new
