@@ -30,5 +30,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :cron_job, Sunstone::Objects::CronJob

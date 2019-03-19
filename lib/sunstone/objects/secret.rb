@@ -20,5 +20,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :secret, Sunstone::Objects::Secret

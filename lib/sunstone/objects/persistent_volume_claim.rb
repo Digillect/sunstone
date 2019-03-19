@@ -40,5 +40,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :persistent_volume_claim, Sunstone::Objects::PersistentVolumeClaim

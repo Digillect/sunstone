@@ -30,5 +30,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :cluster_role_binding, Sunstone::Objects::ClusterRoleBinding

@@ -1,11 +1,7 @@
 require 'test_helper'
-require 'sunstone/objects/introspection/property_descriptor'
-require 'sunstone/objects/introspection/property_factory'
+require 'sunstone/objects/property'
 
-class PropertyFactoryTest < Minitest::Test
-  PD = Sunstone::Objects::Introspection::PropertyDescriptor
-  PF = Sunstone::Objects::Introspection::PropertyFactory
-
+class PropertyCreateMethodsTest < Minitest::Test
   def test_readonly_scalar_property_factory
     klass = create_klass :value, Integer, readonly: true
 
@@ -193,15 +189,15 @@ class PropertyFactoryTest < Minitest::Test
 
     assert_same array, result
   end
+
   def create_klass(name, klass, item_klass = nil, readonly: false, &block)
-    pd = PD.new name, klass, item_klass, readonly: readonly
-    pf = PF.new pd
+    pd = Sunstone::Objects::Property.new name, klass, item_klass, readonly: readonly
 
     klass = Class.new
 
     klass.send :define_method, :initialize, &block if block_given?
 
-    pf.create_methods klass
+    pd.create_methods klass
 
     klass
   end

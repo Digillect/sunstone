@@ -34,5 +34,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :ingress, Sunstone::Objects::Ingress

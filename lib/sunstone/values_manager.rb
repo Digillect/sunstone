@@ -1,3 +1,5 @@
+require 'active_support'
+require 'active_support/core_ext'
 require 'recursive-open-struct'
 
 module Sunstone
@@ -6,13 +8,8 @@ module Sunstone
       @values = {}
     end
 
-    def export_values
-      values = RecursiveOpenStruct.new(@values).freeze
-
-      Object.const_set(:V, values)
-      Object.const_set(:Values, values)
-
-      values
+    def values
+      RecursiveOpenStruct.new(@values).freeze
     end
 
     def load(input_path, additional_files, variables)
@@ -36,7 +33,7 @@ module Sunstone
 
       @values.deep_merge! values.deep_symbolize_keys
     rescue StandardError => err
-      Sunstone.error "Unable to load values file #{path}: #{err.message}"
+      raise "Unable to load values file #{path}: #{err.message}"
     end
 
     def convert_variables(variables)

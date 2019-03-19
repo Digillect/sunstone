@@ -1,5 +1,4 @@
-require 'sunstone/objects/introspection/property_descriptor'
-require 'sunstone/objects/introspection/property_factory'
+require 'sunstone/objects/property'
 
 module Sunstone
   module Objects
@@ -107,12 +106,18 @@ module Sunstone
         result.reverse.flatten
       end
 
-      def self.property(name, klass = nil, item_klass = nil, readonly: false, initialize: nil, test_emptiness: true, serialized_name: nil, serializer: nil, item_serializer: nil)
-        prop = Introspection::PropertyDescriptor.new(
+      def self.property(
+        name,
+          klass = nil, item_klass = nil,
+          readonly: false, initialize: nil, test_emptiness: true,
+          serialized_name: nil,
+          serializer: nil, item_serializer: nil)
+        prop = Property.new(
           name,
           klass, item_klass,
           serialized_name: serialized_name,
-          initialize: initialize, test_emptiness: test_emptiness, readonly: readonly)
+          initialize: initialize, test_emptiness: test_emptiness, readonly: readonly
+        )
 
         raise "Property #{prop.string_name} is already defined in class #{self.name}" if properties.any? { |p| p.name == prop.name }
 
@@ -121,9 +126,7 @@ module Sunstone
 
         class_properties << prop
 
-        factory = Introspection::PropertyFactory.new prop
-
-        factory.create_methods self
+        prop.create_methods self
       end
     end
   end

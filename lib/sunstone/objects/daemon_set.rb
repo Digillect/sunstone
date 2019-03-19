@@ -21,5 +21,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :daemon_set, Sunstone::Objects::DaemonSet

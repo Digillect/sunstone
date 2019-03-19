@@ -1,14 +1,16 @@
 require 'optparse'
+require 'sunstone/error_beautifier'
+require 'sunstone/input_directory_processor'
+require 'sunstone/release_manager'
+require 'sunstone/values_manager'
+require 'sunstone/formatters/json_formatter'
+require 'sunstone/formatters/yaml_formatter'
 
 module Sunstone
   def self.run
     options = parse_options(ARGV)
 
-    release = ::Release
-
-    Sunstone.eager_load!
-
-    error("Input directory #{options.input} does not exists.") unless Dir.exist? options.input
+    raise "Input directory #{options.input} does not exists." unless Dir.exist? options.input
 
     values_manager = ValuesManager.new
 
@@ -22,7 +24,7 @@ module Sunstone
 
     values_manager.load options.input, options.values_files, variables
 
-    values = values_manager.export_values
+    values = values_manager.values
 
     if options.debug
       puts '# Combined values:'
@@ -30,28 +32,32 @@ module Sunstone
       puts
     end
 
-    Dir.chdir options.input do
-      Dir.each_child options.input do |file|
-        next unless file.end_with?('.rb')
-        next unless file.start_with?('_')
+    release_manager = ReleaseManager.new
+    release = release_manager.create_release
 
-        load File.join(options.input, file)
-      end
+    input_directory_processor = InputDirectoryProcessor.new values, release
 
-      Dir.each_child options.input do |file|
-        next unless file.end_with?('.rb')
-        next if file.start_with?('_')
-
-        load File.join(options.input, file)
-      end
-    end
+    input_directory_processor.process_directory options.input
 
     formatter_class = "Sunstone::Formatters::#{options.format.capitalize}Formatter".constantize
 
     objects = release.objects
     formatter = formatter_class.new
 
-    formatter.format objects, options
+    formatter.format objects, options, release
+  rescue StandardError => err
+    puts err
+    puts err.backtrace
+
+    beautifier = ErrorBeautifier.new err.class, err.message, err.backtrace_locations, options.input
+
+    puts beautifier.message
+
+    beautifier.backtrace.each do |location|
+      puts "    at #{location.path}:#{location.lineno}"
+    end
+
+    exit 1
   end
 
   FORMATS = %w[yaml json].freeze

@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
-require 'sunstone'
+#require 'sunstone'
 require 'bundler/setup'
 
 Bundler.require(:default, :test)
@@ -13,4 +13,4 @@ require 'assertions'
 
 MiniTest::Reporters.use!
 
-Sunstone.eager_load!
+#Sunstone.eager_load!

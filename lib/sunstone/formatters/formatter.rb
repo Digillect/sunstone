@@ -1,12 +1,15 @@
+require 'active_support'
+require 'active_support/core_ext'
+
 module Sunstone
   module Formatters
     class Formatter
-      def format(objects, options)
+      def format(objects, options, release)
         split = options.split && options.output != STDOUT
         output = initialize_output(options)
 
         objects.each do |object|
-          io = split ? io_for_object(object, output) : output
+          io = split ? io_for_object(object, output, release) : output
 
           object = object.to_hash.deep_stringify_keys
           str = format_object object
@@ -31,8 +34,8 @@ module Sunstone
 
       private
 
-      def io_for_object(object, output)
-        resource = R.resource_name(object.class).to_s.underscore.dasherize
+      def io_for_object(object, output, release)
+        resource = release.resource_name(object.class).to_s.underscore.dasherize
         file_name = "#{object.metadata.name.parameterize}-#{resource}.#{file_extension}"
         file_path = File.join(output, file_name)
 
@@ -60,7 +63,7 @@ module Sunstone
       def prepare_output_directory(path)
         FileUtils.mkdir_p path unless Dir.exist? path
       rescue IOError => err
-        error "Unable to create directory #{path}: #{err.message}"
+        raise IOError, "Unable to create directory #{path}: #{err.message}"
       end
 
       def clean_output_directory_or_file(output, split)
@@ -68,7 +71,7 @@ module Sunstone
           begin
             FileUtils.rm_rf Dir.glob("#{output}/*"), secure: true
           rescue IOError => err
-            error "Unable to clean directory #{output}: #{err.message}"
+            raise IOError, "Unable to clean directory #{output}: #{err.message}"
           end
         else
           FileUtils.rm output, force: true

@@ -21,5 +21,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :job, Sunstone::Objects::Job

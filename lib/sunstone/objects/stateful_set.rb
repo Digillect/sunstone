@@ -30,5 +30,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :stateful_set, Sunstone::Objects::StatefulSet

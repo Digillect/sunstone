@@ -1,4 +1,5 @@
 require 'recursive-open-struct'
+require 'sunstone/objects/kubernetes_object'
 
 module Sunstone
   module Objects

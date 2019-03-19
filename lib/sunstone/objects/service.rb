@@ -24,5 +24,3 @@ module Sunstone
     end
   end
 end
-
-R.register_resource :service, Sunstone::Objects::Service

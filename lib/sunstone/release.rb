@@ -1,3 +1,6 @@
+require 'sunstone/objects/kubernetes_object'
+require 'sunstone/objects/custom_resource'
+
 module Sunstone
   class Release
     attr_reader :objects
@@ -88,7 +91,7 @@ module Sunstone
 
     def object(name, klass, &block)
       if name.blank?
-        error "Name for the #{klass.name} is not provided through the factory or scope" unless scope?
+        raise "Name for the #{klass.name} is not provided through the factory or scope" unless scope?
 
         name = scope
       else
@@ -126,23 +129,13 @@ module Sunstone
       if resource.is_a? Class
         return resource if resource <= Sunstone::Objects::KubernetesObject
 
-        error 'Invalid Kubernetes resource'
+        raise 'Invalid Kubernetes resource'
       end
 
-      error 'Kubernetes resource must be a Symbol or Class' unless resource.is_a? Symbol
-      error "Kubernetes resource #{resource.to_s.classify} is not defined" unless @resource_to_class.key? resource
+      raise 'Kubernetes resource must be a Symbol or Class' unless resource.is_a? Symbol
+      raise "Kubernetes resource #{resource.to_s.classify} is not defined" unless @resource_to_class.key? resource
 
       @resource_to_class[resource]
-    end
-
-    def error(message, exit_code = 10)
-      Sunstone.error("#{proper_location}: #{message}", exit_code)
-    end
-
-    def proper_location
-      location = caller_locations.find { |l| l.absolute_path != __FILE__ }
-
-      "#{location.absolute_path}:#{location.lineno}"
     end
   end
 end
