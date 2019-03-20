@@ -66,4 +66,52 @@ class BaseArrayTest < Minitest::Test
 
     assert_equal 6, result
   end
+
+  def test_add_or_replace_adds_object_if_not_found
+    item_klass = Class.new do
+      attr_reader :name, :value
+
+      def initialize(name, value)
+        @name = name
+        @value = value
+      end
+    end
+
+    sut << item_klass.new(:key1, 1)
+    sut << item_klass.new(:key2, 2)
+    sut << item_klass.new(:key3, 3)
+
+    sut.add_or_replace item_klass.new(:key4, 4), ->(v) { v.name == :key4 }
+
+    assert_equal 4, sut.length
+
+    second = sut[3]
+
+    assert_equal :key4, second.name
+    assert_equal 4, second.value
+  end
+
+  def test_add_or_replace_replaces_object_if_found
+    item_klass = Class.new do
+      attr_reader :name, :value
+
+      def initialize(name, value)
+        @name = name
+        @value = value
+      end
+    end
+
+    sut << item_klass.new(:key1, 1)
+    sut << item_klass.new(:key2, 2)
+    sut << item_klass.new(:key3, 3)
+
+    sut.add_or_replace item_klass.new(:key2, 4), ->(v) { v.name == :key2 }
+
+    assert_equal 3, sut.length
+
+    second = sut[1]
+
+    assert_equal :key2, second.name
+    assert_equal 4, second.value
+  end
 end
