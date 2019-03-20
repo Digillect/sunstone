@@ -17,7 +17,7 @@ module Sunstone
       end
 
       def add_rule(host, service_name = nil, path: nil, service_port: 80)
-        service_name ||= R.scope
+        service_name ||= metadata.name
 
         raise 'Service name must be specified or scope should be active' unless service_name
 
@@ -25,11 +25,11 @@ module Sunstone
           r.add_path service_name, service_port, path
         end
 
-        @spec.rules.push rule
+        @spec.rules << rule
       end
 
       def add_tls(secret_name, *hosts)
-        @spec.tls.push IngressTLS.new(secret_name, *hosts)
+        @spec.tls << IngressTLS.new(secret_name, *hosts)
       end
     end
   end

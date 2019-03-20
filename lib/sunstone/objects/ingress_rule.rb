@@ -15,7 +15,7 @@ module Sunstone
       end
 
       def add_path(service_name, service_port, path = nil)
-        @http.paths.push HTTPIngressPath.new(service_name, service_port, path)
+        @http.paths << HTTPIngressPath.new(service_name, service_port, path)
       end
     end
   end

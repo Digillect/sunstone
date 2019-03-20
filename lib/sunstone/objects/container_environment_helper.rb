@@ -10,39 +10,40 @@ require 'sunstone/objects/secret_env_source'
 module Sunstone
   module Objects
     class ContainerEnvironmentHelper
-      def initialize(env, env_from)
+      def initialize(env, env_from, default_object_name)
+        @default_object_name = default_object_name
         @env = env
         @env_from = env_from
       end
 
       def add(names_and_values = {})
         names_and_values.each do |name, value|
-          @env.push EnvVar.new(name, value.to_s)
+          @env << EnvVar.new(name, value.to_s)
         end
       end
 
       def add_config_map_key(name, config_map_name = nil, key: nil, optional: nil)
-        @env.push EnvVar.new(name, EnvVarSource.new(ConfigMapKeySelector.new(key || name, config_map_name || R.scope, optional)))
+        @env << EnvVar.new(name, EnvVarSource.new(ConfigMapKeySelector.new(key || name, config_map_name || @default_object_name, optional)))
       end
 
       def add_secret_key(name, secret_name = nil, key: nil, optional: nil)
-        @env.push EnvVar.new(name, EnvVarSource.new(SecretKeySelector.new(key || name, secret_name || R.scope, optional)))
+        @env << EnvVar.new(name, EnvVarSource.new(SecretKeySelector.new(key || name, secret_name || @default_object_name, optional)))
       end
 
       def add_field(name, field_path, api_version = nil)
-        @env.push EnvVar.new(name, EnvVarSource.new(ObjectFieldSelector.new(field_path, api_version)))
+        @env << EnvVar.new(name, EnvVarSource.new(ObjectFieldSelector.new(field_path, api_version)))
       end
 
       def add_resource_field(name, resource, container_name: nil, divisor: nil)
-        @env.push EnvVar.new(name, EnvVarSource.new(ResourceFieldSelector.new(resource, container_name, divisor)))
+        @env << EnvVar.new(name, EnvVarSource.new(ResourceFieldSelector.new(resource, container_name, divisor)))
       end
 
       def use_config_map(name = nil, optional: nil, prefix: nil)
-        @env_from.push EnvFromSource.new(ConfigMapEnvSource.new(name || R.scope, optional), prefix)
+        @env_from << EnvFromSource.new(ConfigMapEnvSource.new(name || @default_object_name, optional), prefix)
       end
 
       def use_secret(name = nil, optional: nil, prefix: nil)
-        @env_from.push EnvFromSource.new(SecretEnvSource.new(name || R.scope, optional), prefix)
+        @env_from << EnvFromSource.new(SecretEnvSource.new(name || @default_object_name, optional), prefix)
       end
     end
   end

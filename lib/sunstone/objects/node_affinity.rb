@@ -5,7 +5,7 @@ require 'sunstone/objects/node_selector'
 module Sunstone
   module Objects
     class NodeAffinity < BaseObject
-      property :preferred, Array, PreferredSchedulingTerm, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
+      property :preferred, BaseArray, PreferredSchedulingTerm, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
       property :required, NodeSelector, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
 
       def add_preferred_term(&block)
@@ -13,7 +13,7 @@ module Sunstone
 
         term.instance_eval(&block) if block_given?
 
-        @preferred.push term
+        @preferred << term
 
         term
       end

@@ -8,7 +8,7 @@ module Sunstone
       property :port
       property :host, String
       property :scheme, String
-      property :http_headers, Array, HttpHeader
+      property :http_headers, BaseArray, HttpHeader
 
       def initialize(path, port)
         super()

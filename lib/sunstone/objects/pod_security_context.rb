@@ -11,13 +11,13 @@ module Sunstone
       property :run_as_user, Integer
       property :se_linux_options, SELinuxOptions
       property :supplemental_groups, Array, Integer
-      property :sysctls, Array, Sysctl
+      property :sysctls, BaseArray, Sysctl
 
       def sysctls(names_and_values = {})
         return @sysctls if names_and_values.empty?
 
         names_and_values.each_pair do |name, value|
-          @sysctls.push Sysctl.new(name, value)
+          @sysctls << Sysctl.new(name, value)
         end
       end
 

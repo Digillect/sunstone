@@ -12,7 +12,7 @@ class ClusterRoleBindingTest < Minitest::Test
     assert_property sut, :role_ref
     assert_property sut, :subjects
 
-    assert_kind_of Array, sut.subjects
+    assert_kind_of Sunstone::Objects::BaseArray, sut.subjects
 
     assert_respond_to sut, :cluster_role
     assert_respond_to sut, :add_user

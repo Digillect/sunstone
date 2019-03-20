@@ -5,7 +5,7 @@ module Sunstone
   module Objects
     class SecretVolumeSource < BaseObject
       property :secret_name, readonly: true
-      property :items, Array, KeyToPath
+      property :items, BaseArray, KeyToPath
       property :default_mode, Integer
       property :optional, TrueClass
 
@@ -16,7 +16,7 @@ module Sunstone
       end
 
       def add_item(key, path, mode = nil)
-        @items.push KeyToPath.new(key, path, mode)
+        @items << KeyToPath.new(key, path, mode)
       end
     end
   end

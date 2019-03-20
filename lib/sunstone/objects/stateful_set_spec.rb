@@ -13,7 +13,7 @@ module Sunstone
       property :selector, LabelSelector
       property :template, PodTemplateSpec
       property :update_strategy, StatefulSetUpdateStrategy
-      property :volume_claim_templates, Array, PersistentVolumeClaim
+      property :volume_claim_templates, BaseArray, PersistentVolumeClaim
     end
   end
 end

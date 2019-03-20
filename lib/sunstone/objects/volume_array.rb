@@ -8,10 +8,10 @@ require 'sunstone/objects/volume'
 
 module Sunstone
   module Objects
-    class VolumeArray < Array
+    class VolumeArray < BaseArray
       def config_map(volume_name, *args, &block)
         keys_and_paths = args.extract_options!
-        config_map_name ||= args.first || R.scope
+        config_map_name ||= args.first || __root.metadata.name
 
         raise 'ConfigMap name must be specified or scope must be active' if config_map_name.blank?
 
@@ -52,7 +52,7 @@ module Sunstone
 
       def secret(volume_name, *args, &block)
         keys_and_paths = args.extract_options!
-        secret_name ||= args.first || R.scope
+        secret_name ||= args.first || __root.metadata.name
 
         raise 'Secret name must be specified or scope must be active' if secret_name.blank?
 
@@ -72,7 +72,7 @@ module Sunstone
 
         volume = Volume.new volume_name, source
 
-        push volume
+        self << volume
 
         volume
       end

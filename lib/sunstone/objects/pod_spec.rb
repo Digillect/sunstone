@@ -18,7 +18,7 @@ module Sunstone
       property :dns_config, PodDNSConfig
       property :dns_policy, String
       property :enable_service_links, TrueClass
-      property :host_aliases, Array, HostAlias
+      property :host_aliases, BaseArray, HostAlias
       property :host_ipc, TrueClass, serialized_name: :hostIPC
       property :host_network, TrueClass
       property :host_pid, TrueClass, serialized_name: :hostPID
@@ -27,7 +27,7 @@ module Sunstone
       property :node_selector, Hash
       property :priority, Integer
       property :priority_class_name, String
-      property :readiness_gates, Array, PodReadinessGate
+      property :readiness_gates, BaseArray, PodReadinessGate
       property :restart_policy, String
       property :runtime_class_name, String
       property :security_context, PodSecurityContext
@@ -36,10 +36,10 @@ module Sunstone
       property :share_process_namespace, TrueClass
       property :subdomain, String
       property :termination_grace_period_seconds, Integer
-      property :tolerations, Array, Toleration
-      property :image_pull_secrets, Array, LocalObjectReference
-      property :containers, Array, Container
-      property :init_containers, Array, Container
+      property :tolerations, BaseArray, Toleration
+      property :image_pull_secrets, BaseArray, LocalObjectReference
+      property :containers, BaseArray, Container
+      property :init_containers, BaseArray, Container
       property :volumes, VolumeArray
 
       def container(name = :main, &block)
@@ -48,7 +48,7 @@ module Sunstone
         unless container
           container = Container.new name
 
-          @containers.push container
+          @containers << container
         end
 
         container.instance_eval(&block) if block_given?
@@ -57,7 +57,7 @@ module Sunstone
       end
 
       def host_alias(ip, *host_names)
-        @host_aliases.push HostAlias.new(ip, host_names)
+        @host_aliases << HostAlias.new(ip, host_names)
       end
 
       def init_container(name, &block)
@@ -66,7 +66,7 @@ module Sunstone
         unless container
           container = Container.new name
 
-          @init_containers.push container
+          @init_containers << container
         end
 
         container.instance_eval(&block) if block_given?
@@ -78,7 +78,7 @@ module Sunstone
         return @image_pull_secrets if names.empty?
 
         names.each do |name|
-          @image_pull_secrets.push LocalObjectReference.new(name)
+          @image_pull_secrets << LocalObjectReference.new(name)
         end
 
         @image_pull_secrets
@@ -102,7 +102,7 @@ module Sunstone
         return @readiness_gates if gates.empty?
 
         gates.each do |gate|
-          @readiness_gates.push PodReadinessGate.new(gate)
+          @readiness_gates << PodReadinessGate.new(gate)
         end
       end
 
@@ -113,7 +113,7 @@ module Sunstone
 
         toleration.instance_eval(&block) if block_given?
 
-        @tolerations.push toleration
+        @tolerations << toleration
 
         toleration
       end

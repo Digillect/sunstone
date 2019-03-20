@@ -5,7 +5,7 @@ module Sunstone
     class NodeSelectorRequirement < BaseObject
       property :key, String, readonly: true
       property :operator, String, readonly: true
-      property :values, Array, initialize: false, test_emptiness: false
+      property :values, Array, String, initialize: false, test_emptiness: false
 
       def initialize(key, operator, values = nil)
         @key = key

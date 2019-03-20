@@ -7,8 +7,8 @@ module Sunstone
   module Objects
     class IngressSpec < BaseObject
       property :backend, IngressBackend
-      property :tls, Array, IngressTLS
-      property :rules, Array, IngressRule
+      property :tls, BaseArray, IngressTLS
+      property :rules, BaseArray, IngressRule
     end
   end
 end

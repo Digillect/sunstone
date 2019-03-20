@@ -42,7 +42,7 @@ module Sunstone
       variables.each do |variable|
         name_and_value = variable.split('=')
         name = name_and_value.first
-        value = name_and_value.second || true
+        value = name_and_value.second || 'true'
 
         set_value(result, name, convert_value(value))
       end

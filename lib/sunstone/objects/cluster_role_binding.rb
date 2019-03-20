@@ -6,7 +6,7 @@ module Sunstone
   module Objects
     class ClusterRoleBinding < KubernetesObject
       property :role_ref, RoleRef, initialize: false
-      property :subjects, Array, Subject
+      property :subjects, BaseArray, Subject
 
       def api_version
         'rbac.authorization.k8s.io/v1'

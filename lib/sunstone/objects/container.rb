@@ -17,21 +17,21 @@ module Sunstone
       property :working_dir, String
       property :image, String
       property :image_pull_policy, String
-      property :env, Array, EnvVar
-      property :env_from, Array, EnvFromSource
+      property :env, BaseArray, EnvVar
+      property :env_from, BaseArray, EnvFromSource
       property :liveness_probe, Probe
       property :readiness_probe, Probe
       property :lifecycle, Lifecycle
       property :resources, ResourceRequirements
       property :stdin, TrueClass
       property :stdin_once, TrueClass
-      property :ports, Array, ContainerPort
+      property :ports, BaseArray, ContainerPort
       property :security_context, SecurityContext
       property :termination_message_path, String
       property :termination_message_policy, String
       property :tty, TrueClass
-      property :volume_devices, Array, VolumeDevice
-      property :volume_mounts, Array, VolumeMount
+      property :volume_devices, BaseArray, VolumeDevice
+      property :volume_mounts, BaseArray, VolumeMount
 
       def initialize(name)
         super()
@@ -56,7 +56,7 @@ module Sunstone
 
         port.instance_eval(&block) unless block.nil?
 
-        @ports.push port
+        @ports << port
       end
 
       def expose_default_http_port(&block)
@@ -64,7 +64,7 @@ module Sunstone
       end
 
       def environment(&block)
-        @environment ||= ContainerEnvironmentHelper.new(@env, @env_from)
+        @environment ||= ContainerEnvironmentHelper.new(@env, @env_from, __root.metadata.name)
 
         @environment.instance_eval(&block) if block_given?
 
@@ -79,11 +79,11 @@ module Sunstone
       end
 
       def mount_device(volume_name, device_path)
-        @volume_devices.push VolumeDevice.new(volume_name, device_path)
+        @volume_devices << VolumeDevice.new(volume_name, device_path)
       end
 
       def mount_volume(volume_name, mount_path, readonly: nil, mount_propagation: nil, sub_path: nil)
-        @volume_mounts.push VolumeMount.new(volume_name, mount_path, readonly, mount_propagation, sub_path)
+        @volume_mounts << VolumeMount.new(volume_name, mount_path, readonly, mount_propagation, sub_path)
       end
     end
   end

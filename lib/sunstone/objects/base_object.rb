@@ -1,11 +1,17 @@
+require 'sunstone/objects/base_array'
+require 'sunstone/objects/parentable'
 require 'sunstone/objects/property'
 
 module Sunstone
   module Objects
     class BaseObject
+      include Parentable
+
       def initialize
         self.class.properties.each do |property|
           value = property.initial_value
+
+          value.__parent = self if value.is_a? Parentable
 
           instance_variable_set(property.variable, value)
         end

@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'sunstone/objects/base_object'
+require 'sunstone/objects/parentable'
 
 class BaseObjectTest < Minitest::Test
   def test_properties_are_remembered
@@ -256,5 +257,39 @@ class BaseObjectTest < Minitest::Test
     sut = klass.new
 
     assert_equal({}, sut.to_hash)
+  end
+
+  def test_parentable_property_receives_parent_on_initialization
+    parentable = Class.new do
+      include Sunstone::Objects::Parentable
+    end
+
+    klass = Class.new Sunstone::Objects::BaseObject do
+      property :value, parentable
+    end
+
+    sut = klass.new
+
+    assert_same sut, sut.value.__parent
+  end
+
+  def test_parentable_chain_resolution
+    parentable = Class.new do
+      include Sunstone::Objects::Parentable
+    end
+
+    inner = Class.new Sunstone::Objects::BaseObject do
+      property :second, parentable
+    end
+
+    klass = Class.new Sunstone::Objects::BaseObject do
+      property :first, inner
+    end
+
+    sut = klass.new
+
+    assert_same sut, sut.first.__parent
+    assert_same sut.first, sut.first.second.__parent
+    assert_same sut, sut.first.second.__root
   end
 end

@@ -5,7 +5,7 @@ module Sunstone
   module Objects
     class PodDNSConfig < BaseObject
       property :nameservers, Array, String
-      property :options, Array, PodDNSConfigOption
+      property :options, BaseArray, PodDNSConfigOption
       property :searches, Array, String
 
       def nameservers(*values)
@@ -21,7 +21,7 @@ module Sunstone
 
         option.instance_eval(&block) if block_given?
 
-        @options.push option
+        @options << option
 
         option
       end

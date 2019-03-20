@@ -5,15 +5,15 @@ require 'sunstone/objects/pod_affinity_term'
 module Sunstone
   module Objects
     class PodAntiAffinity < BaseObject
-      property :preferred, Array, WeightedPodAffinityTerm, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
-      property :required, Array, PodAffinityTerm, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
+      property :preferred, BaseArray, WeightedPodAffinityTerm, serialized_name: 'preferredDuringSchedulingIgnoredDuringExecution'
+      property :required, BaseArray, PodAffinityTerm, serialized_name: 'requiredDuringSchedulingIgnoredDuringExecution'
 
       def add_preferred_term(&block)
         term = WeightedPodAffinityTerm.new
 
         term.instance_eval(&block) if block_given?
 
-        @preferred.push term
+        @preferred << term
 
         term
       end
@@ -23,7 +23,7 @@ module Sunstone
 
         term.instance_eval(&block) if block_given?
 
-        @preferred.push term
+        @preferred << term
 
         term
       end
