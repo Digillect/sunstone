@@ -26,4 +26,44 @@ class IngressTest < Minitest::Test
 
     assert_equal :test, sut.spec.rules.first.http.paths.first.backend.service_name
   end
+
+  def test_add_rule_with_multiple_paths
+    sut.add_rule 'www.example.org' do
+      add_path :api, 80, '/api'
+    end
+
+    expected = {
+      apiVersion: 'extensions/v1beta1',
+      kind: 'Ingress',
+      metadata: {
+        name: 'test'
+      },
+      spec: {
+        rules: [
+          {
+            host: 'www.example.org',
+            http: {
+              paths: [
+                {
+                  backend: {
+                    serviceName: 'test',
+                    servicePort: 80
+                  }
+                },
+                {
+                  backend: {
+                    serviceName: 'api',
+                    servicePort: 80
+                  },
+                  path: '/api'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+
+    assert_equal expected.to_a, sut.to_hash.to_a
+  end
 end
