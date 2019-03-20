@@ -6,26 +6,15 @@ module Sunstone
     end
 
     def process_directory(path)
-      Object.const_set :Values, @values
-      Object.const_set :V, @values
-      Object.const_set :Release, @release
-      Object.const_set :R, @release
+      setup_constants
 
       begin
         Dir.chdir path do
-          Dir.each_child path do |file|
-            next unless file.end_with?('.rb')
-            next unless file.start_with?('_')
+          $LOAD_PATH.push path
 
-            require File.join(path, file)
-          end
+          process_directory_files(path)
 
-          Dir.each_child path do |file|
-            next unless file.end_with?('.rb')
-            next if file.start_with?('_')
-
-            require File.join(path, file)
-          end
+          $LOAD_PATH.pop
         end
       rescue StandardError => err
         backtrace = err.backtrace.select { |line| line.start_with? path }
@@ -35,11 +24,42 @@ module Sunstone
 
         raise new_err
       ensure
-        Object.send :remove_const, :Values
-        Object.send :remove_const, :V
-        Object.send :remove_const, :Release
-        Object.send :remove_const, :R
+        teardown_constants
       end
+    end
+
+    private
+
+    def process_directory_files(path)
+      Dir.each_child path do |file|
+        next unless file.end_with?('.rb')
+        next unless file.start_with?('_')
+
+        # noinspection RubyResolve
+        require File.join(path, file)
+      end
+
+      Dir.each_child path do |file|
+        next unless file.end_with?('.rb')
+        next if file.start_with?('_')
+
+        # noinspection RubyResolve
+        require File.join(path, file)
+      end
+    end
+
+    def setup_constants
+      Object.const_set :Values, @values
+      Object.const_set :V, @values
+      Object.const_set :Release, @release
+      Object.const_set :R, @release
+    end
+
+    def teardown_constants
+      Object.send :remove_const, :Values
+      Object.send :remove_const, :V
+      Object.send :remove_const, :Release
+      Object.send :remove_const, :R
     end
   end
 end

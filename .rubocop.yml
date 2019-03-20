@@ -12,3 +12,6 @@ Style/ClassAndModuleChildren:
 
 Metrics/LineLength:
   Max: 140
+
+Metrics/MethodLength:
+  Max: 30

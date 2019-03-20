@@ -75,4 +75,12 @@ class InputDirectoryProcessorTest < Minitest::Test
     refute_empty backtrace
     assert_equal 4, backtrace.length
   end
+
+  def test_load_path_is_adjusted
+    sut = Sunstone::InputDirectoryProcessor.new nil, nil
+
+    assert_output "inner#{$INPUT_RECORD_SEPARATOR}outer#{$INPUT_RECORD_SEPARATOR}" do
+      sut.process_directory File.join(__dir__, 'data/load_path')
+    end
+  end
 end
