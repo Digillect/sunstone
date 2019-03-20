@@ -16,13 +16,13 @@ module Sunstone
         'extensions/v1beta1'
       end
 
-      def add_rule(host, service_name = nil, path: nil, service_port: 80)
+      def add_rule(host, service_name = nil, path: nil, service_port: 80, &block)
         service_name ||= metadata.name
-
-        raise 'Service name must be specified or scope should be active' unless service_name
 
         rule = IngressRule.new(host).tap do |r|
           r.add_path service_name, service_port, path
+
+          r.instance_eval(&block) unless block.nil?
         end
 
         @spec.rules << rule
