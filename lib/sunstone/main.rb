@@ -10,34 +10,20 @@ module Sunstone
   def self.run
     options = parse_options(ARGV)
 
-    raise "Input directory #{options.input} does not exists." unless Dir.exist? options.input
+    raise "Input directory #{options.input} does not exists." unless Dir.exist? options.input_directory
 
-    values_manager = ValuesManager.new
+    Dir.chdir options.input_directory do
+      values_manager = ValuesManager.new options.debug
 
-    variables = values_manager.convert_variables options.variables
+      values = values_manager.combine options.input_directory, options.values_files, variables
 
-    if options.debug
-      puts '# Command line provided values:'
-      puts variables.to_hash.deep_stringify_keys.to_yaml
-      puts
+      release_manager = ReleaseManager.new
+      release = release_manager.create_release
+
+      input_directory_processor = InputDirectoryProcessor.new options.input_directory, values, release
+
+      input_directory_processor.process
     end
-
-    values_manager.load options.input, options.values_files, variables
-
-    values = values_manager.values
-
-    if options.debug
-      puts '# Combined values:'
-      puts values.to_hash.to_yaml
-      puts
-    end
-
-    release_manager = ReleaseManager.new
-    release = release_manager.create_release
-
-    input_directory_processor = InputDirectoryProcessor.new values, release
-
-    input_directory_processor.process_directory options.input
 
     formatter_class = "Sunstone::Formatters::#{options.format.capitalize}Formatter".constantize
 
@@ -98,9 +84,9 @@ module Sunstone
         options.format = format
       end
 
-      options.values_files = []
+      options.value_files = []
       opts.on '-f', '--values valueFiles', Array, 'specify values in YAML file (can specify multiple)' do |files|
-        options.values_files += files.map { |file| File.absolute_path(file) }
+        options.value_files += files.map { |file| File.absolute_path(file) }
       end
 
       opts.separator ''
@@ -124,7 +110,7 @@ module Sunstone
 
     opt_parser.parse! args
 
-    options.input = File.absolute_path(ARGV.first || Dir.pwd)
+    options.input_directory = File.absolute_path(ARGV.first || Dir.pwd)
 
     options
   end

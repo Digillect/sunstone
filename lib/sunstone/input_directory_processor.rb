@@ -1,23 +1,22 @@
 module Sunstone
   class InputDirectoryProcessor
-    def initialize(values, release)
+    def initialize(input_directory, values, release)
+      @input_directory = input_directory
       @values = values
       @release = release
     end
 
-    def process_directory(path)
+    def process
+      components = Pathname.new File.join(@input_directory, 'components')
+
+      return unless components.exist? && components.directory?
+
       setup_constants
 
       begin
-        Dir.chdir path do
-          $LOAD_PATH.push path
-
-          process_directory_files(path)
-
-          $LOAD_PATH.pop
-        end
+        process_directory components
       rescue StandardError => err
-        backtrace = err.backtrace.select { |line| line.start_with? path }
+        backtrace = err.backtrace.select { |line| line.start_with? @input_directory }
 
         new_err = err.class.new err.message
         new_err.set_backtrace backtrace
@@ -30,22 +29,17 @@ module Sunstone
 
     private
 
+    def process_directory(path)
+      process_directory_files path
+      process_subdirectories path
+    end
+
     def process_directory_files(path)
-      Dir.each_child path do |file|
-        next unless file.end_with?('.rb')
-        next unless file.start_with?('_')
+      path.glob('*.rb').select(&:file?).sort.each(&method(:require))
+    end
 
-        # noinspection RubyResolve
-        require File.join(path, file)
-      end
-
-      Dir.each_child path do |file|
-        next unless file.end_with?('.rb')
-        next if file.start_with?('_')
-
-        # noinspection RubyResolve
-        require File.join(path, file)
-      end
+    def process_subdirectories(path)
+      path.children.select(&:directory?).sort.each(&method(:process_directory))
     end
 
     def setup_constants

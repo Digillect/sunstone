@@ -4,36 +4,53 @@ require 'recursive-open-struct'
 
 module Sunstone
   class ValuesManager
-    def initialize
-      @values = {}
+    attr_reader :values
+
+    def initialize(debug = false)
+      @debug = debug
     end
 
-    def values
-      RecursiveOpenStruct.new(@values).freeze
+    def combine(input_path, additional_files, variables)
+      values = {}
+
+      load_files values, input_path, additional_files
+      load_variables values, variables
+
+      print_combined_values values if @debug
+
+      @values = RecursiveOpenStruct.new(values).freeze
     end
 
-    def load(input_path, additional_files, variables)
+    private
+
+    def load_files(values, input_path, additional_files)
       values_yaml = File.join(input_path, 'values.yaml')
 
-      load_file values_yaml if File.exist? values_yaml
+      load_file values, values_yaml if File.exist? values_yaml
 
       additional_files.each do |file|
         file = File.absolute_path file
 
         # error "Values file #{file} doesn't exists" unless File.exist? file
 
-        load_file file
+        load_file values, file
       end
-
-      @values.deep_merge! variables.deep_symbolize_keys
     end
 
-    def load_file(path)
-      values = YAML.load_file path
+    def load_file(values, path)
+      file_values = YAML.load_file path
 
-      @values.deep_merge! values.deep_symbolize_keys
+      values.deep_merge! file_values.deep_symbolize_keys
     rescue StandardError => err
       raise "Unable to load values file #{path}: #{err.message}"
+    end
+
+    def load_variables(values, variables)
+      variables = convert_variables variables
+
+      print_command_line_variables variables if @debug
+
+      values.deep_merge! variables.deep_symbolize_keys
     end
 
     def convert_variables(variables)
@@ -49,8 +66,6 @@ module Sunstone
 
       result
     end
-
-    private
 
     def convert_value(value)
       if value.start_with?('\'', '\"')
@@ -82,6 +97,18 @@ module Sunstone
       end
 
       values[parts.last.to_sym] = value
+    end
+
+    def print_command_line_variables(variables)
+      puts '# Command line provided values:'
+      puts variables.deep_stringify_keys.to_yaml
+      puts
+    end
+
+    def print_combined_values(values)
+      puts '# Combined values:'
+      puts values.to_hash.to_yaml
+      puts
     end
   end
 end
