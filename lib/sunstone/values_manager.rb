@@ -1,6 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
-require 'recursive-open-struct'
+require 'hashie/mash'
 
 module Sunstone
   class ValuesManager
@@ -18,7 +18,7 @@ module Sunstone
 
       print_combined_values values if @debug
 
-      @values = RecursiveOpenStruct.new(values).freeze
+      @values = Hashie::Mash.new(values).freeze
     end
 
     private

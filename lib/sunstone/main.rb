@@ -12,22 +12,11 @@ module Sunstone
 
     raise "Input directory #{options.input} does not exists." unless Dir.exist? options.input_directory
 
-    Dir.chdir options.input_directory do
-      values_manager = ValuesManager.new options.debug
-
-      values = values_manager.combine options.input_directory, options.values_files, variables
-
-      release_manager = ReleaseManager.new
-      release = release_manager.create_release
-
-      input_directory_processor = InputDirectoryProcessor.new options.input_directory, values, release
-
-      input_directory_processor.process
-    end
+    release = create_release options
+    objects = release.objects
 
     formatter_class = "Sunstone::Formatters::#{options.format.capitalize}Formatter".constantize
 
-    objects = release.objects
     formatter = formatter_class.new
 
     formatter.format objects, options, release
@@ -44,6 +33,23 @@ module Sunstone
     end
 
     exit 1
+  end
+
+  def self.create_release(options)
+    Dir.chdir options.input_directory do
+      values_manager = ValuesManager.new options.debug
+
+      values = values_manager.combine options.input_directory, options.value_files, options.variables
+
+      release_manager = ReleaseManager.new
+      release = release_manager.create_release
+
+      input_directory_processor = InputDirectoryProcessor.new options.input_directory, values, release
+
+      input_directory_processor.process
+
+      release
+    end
   end
 
   FORMATS = %w[yaml json].freeze

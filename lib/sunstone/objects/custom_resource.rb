@@ -1,4 +1,4 @@
-require 'recursive-open-struct'
+require 'hashie/mash'
 require 'sunstone/objects/kubernetes_object'
 
 module Sunstone
@@ -9,13 +9,13 @@ module Sunstone
       def initialize(name)
         super(name)
 
-        @fields = RecursiveOpenStruct.new
+        @fields = Hashie::Mash.new
       end
 
       protected
 
       def post_serialize_properties(result)
-        result.deep_merge! @fields.to_hash
+        result.deep_merge! @fields.deep_symbolize_keys
       end
     end
   end
