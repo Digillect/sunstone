@@ -4,7 +4,6 @@ module Sunstone
     def initialize(kind, message, backtrace_locations, input_directory)
       @kind = kind
       @message = message
-      puts backtrace_locations
       @backtrace = backtrace_locations.select { |l| l.absolute_path.start_with? input_directory }
     end
 

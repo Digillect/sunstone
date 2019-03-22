@@ -55,4 +55,11 @@ class ContainerEnvironmentHelperTest < Minitest::Test
 
     assert_equal 1, env_from.length
   end
+
+  def test_use_config_map_and_use_secret_do_not_overlap
+    sut.use_config_map
+    sut.use_secret
+
+    assert_equal 2, env_from.length
+  end
 end

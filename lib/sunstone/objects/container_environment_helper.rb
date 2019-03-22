@@ -55,7 +55,7 @@ module Sunstone
       def add_env_from_source(name, klass, optional, prefix)
         name ||= @default_object_name
 
-        return if @env_from.any? { |s| s.source.name == name }
+        return if @env_from.any? { |s| s.source.class == klass && s.source.name == name }
 
         @env_from << EnvFromSource.new(klass.new(name, optional), prefix)
       end
