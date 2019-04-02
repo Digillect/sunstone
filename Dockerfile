@@ -15,4 +15,3 @@ COPY bin/sunstone /usr/local/sunstone/bin/
 COPY bin/sunstone.sh /usr/local/bin/sunstone
 COPY lib /usr/local/sunstone/lib/
 
-CMD ["/usr/local/bin/sunstone", "-po", "/data/output", "/data/input"]

@@ -51,6 +51,9 @@ R.scope 'hello' do
 end
 ```
 
+Just like [Ksonnet](https://ksonnet.io), which is unfortunately discontinued, Sunstone is the tool to make
+deployment to Kubernetes fast, easy and manageable.
+
 More examples can be found in the [Tutorial](examples/tutorial), documentation and API Reference
 is in [Wiki](https://github.com/Digillect/sunstone/wiki).
 
@@ -77,7 +80,7 @@ The following command will convert templates in the `<input directory>` and will
 results into the `<output directory>` as separate files:
 
 ```bash
-docker run -i --rm -v <input directory>:/data/input -v <output directory>:/data/output digillect/sunstone [flags]
+docker run -i --rm -v <input directory>:/data/input -v <output directory>:/data/output digillect/sunstone sunstone [flags]
 ```
 
 ## Usage
