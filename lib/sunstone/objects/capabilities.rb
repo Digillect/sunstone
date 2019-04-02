@@ -9,13 +9,13 @@ module Sunstone
       def add(*values)
         return @add if values.empty?
 
-        @add.concat(values.map(->(item) { item.to_s }))
+        @add.concat values.map(&:to_s)
       end
 
       def drop(*values)
         return @drop if values.empty?
 
-        @drop.concat(values.map(->(item) { item.to_s }))
+        @drop.concat values.map(&:to_s)
       end
     end
   end

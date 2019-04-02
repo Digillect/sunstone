@@ -12,7 +12,7 @@ module Sunstone
       def api_groups(*values)
         return @api_groups if values.empty?
 
-        @api_groups.concat(values.map(->(item) { item.to_s }))
+        @api_groups.concat values.map(&:to_s)
       end
 
       alias api_group api_groups
@@ -20,7 +20,7 @@ module Sunstone
       def non_resource_urls(*values)
         return @non_resource_urls if values.empty?
 
-        @non_resource_urls.concat(values.map(->(item) { item.to_s }))
+        @non_resource_urls.concat values.map(&:to_s)
       end
 
       alias non_resource_url non_resource_urls
@@ -28,7 +28,7 @@ module Sunstone
       def resource_names(*values)
         return @resource_names if values.empty?
 
-        @resource_names.concat(values.map(->(item) { item.to_s }))
+        @resource_names.concat values.map(&:to_s)
       end
 
       alias resource_name resource_names
@@ -36,7 +36,7 @@ module Sunstone
       def resources(*values)
         return @resources if values.empty?
 
-        @resources.concat(values.map(->(item) { item.to_s }))
+        @resources.concat values.map(&:to_s)
       end
 
       alias resource resources
@@ -44,7 +44,7 @@ module Sunstone
       def verbs(*values)
         return @verbs if values.empty?
 
-        @verbs.concat(values.map(->(item) { item.to_s }))
+        @verbs.concat values.map(&:to_s)
       end
 
       alias verb verbs
