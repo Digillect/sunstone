@@ -17,6 +17,8 @@ module Sunstone
 
         rule.instance_eval(&block) unless block.nil?
 
+        @rules << rule
+
         rule
       end
     end
