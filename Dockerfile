@@ -11,7 +11,5 @@ COPY Gemfile Gemfile.lock /usr/local/sunstone/
 WORKDIR /usr/local/sunstone
 RUN bundle install --without development test
 
-COPY bin/sunstone /usr/local/sunstone/bin/
-COPY bin/sunstone.sh /usr/local/bin/sunstone
+COPY bin/sunstone-docker.sh /usr/local/bin/sunstone
 COPY lib /usr/local/sunstone/lib/
-

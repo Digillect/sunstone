@@ -1,9 +1,6 @@
-#!/usr/bin/env ruby
-$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
+#!/bin/sh
+BASEDIR=$(dirname "$0")
 
-require 'bundler/setup'
+export BUNDLE_GEMFILE="${BASEDIR}/../Gemfile"
 
-require 'sunstone'
-require 'sunstone/main'
-
-Sunstone.run
+/usr/bin/env ruby "${BASEDIR}/../lib/sunstone.rb" $*

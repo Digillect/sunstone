@@ -3,6 +3,7 @@ require 'sunstone/error_beautifier'
 require 'sunstone/input_directory_processor'
 require 'sunstone/release_manager'
 require 'sunstone/values_manager'
+require 'sunstone/version'
 require 'sunstone/formatters/json_formatter'
 require 'sunstone/formatters/yaml_formatter'
 

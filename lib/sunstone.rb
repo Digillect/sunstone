@@ -1,4 +1,6 @@
-require 'sunstone/version'
+$LOAD_PATH.unshift __dir__
 
-module Sunstone
-end
+require 'sunstone/main'
+
+Sunstone.run
+
