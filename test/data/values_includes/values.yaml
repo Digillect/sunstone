@@ -1,0 +1,8 @@
+$include:
+  - top1.yaml
+  - top2.yaml
+
+a: 'a'
+b:
+  c: 'c'
+  d: 'd'

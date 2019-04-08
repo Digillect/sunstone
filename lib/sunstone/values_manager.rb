@@ -39,10 +39,25 @@ module Sunstone
 
     def load_file(values, path)
       file_values = YAML.load_file path
+      files_to_include = file_values.delete '$include'
 
       values.deep_merge! file_values.deep_symbolize_keys
+
+      process_includes values, files_to_include, File.dirname(path) if files_to_include
     rescue StandardError => err
       raise "Unable to load values file #{path}: #{err.message}"
+    end
+
+    def process_includes(values, files_to_include, base_path)
+      if files_to_include.is_a? String
+        load_file values, File.join(base_path, files_to_include)
+      elsif files_to_include.is_a? Array
+        files_to_include.each do |file_to_include|
+          load_file values, File.join(base_path, file_to_include.to_s)
+        end
+      else
+        raise 'Value for $include must be a file name or array of file names'
+      end
     end
 
     def load_variables(values, variables)
