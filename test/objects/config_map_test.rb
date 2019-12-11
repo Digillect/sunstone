@@ -24,4 +24,12 @@ class ConfigMapTest < Minitest::Test
 
     assert_equal expected, sut.to_hash
   end
+
+  def test_capitalization
+    sut.set Sms__Enabled: 'value', AWS_KEY: 'value'
+
+    hash_keys = sut.to_hash[:data].keys.map(&:to_s)
+
+    assert_equal %w[Sms__Enabled AWS_KEY], hash_keys
+  end
 end

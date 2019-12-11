@@ -43,7 +43,7 @@ class PersistentVolumeClaimTest < Minitest::Test
     sut.storage_request '5Gi'
 
     expected = {
-      apiVersion: 'core/v1',
+      apiVersion: 'v1',
       kind: 'PersistentVolumeClaim',
       metadata: {
         name: 'test'

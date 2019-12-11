@@ -11,7 +11,7 @@ module Sunstone
       end
 
       def api_version
-        'core/v1'
+        'v1'
       end
 
       def access_modes(*args)
