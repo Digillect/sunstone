@@ -23,7 +23,7 @@ module Sunstone
 
         term.instance_eval(&block) if block_given?
 
-        @preferred << term
+        @required << term
 
         term
       end
