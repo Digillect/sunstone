@@ -5,6 +5,7 @@ require 'sunstone/objects/config_map'
 require 'sunstone/objects/cron_job'
 require 'sunstone/objects/daemon_set'
 require 'sunstone/objects/deployment'
+require 'sunstone/objects/horizontal_pod_autoscaler'
 require 'sunstone/objects/ingress'
 require 'sunstone/objects/job'
 require 'sunstone/objects/persistent_volume_claim'
@@ -37,6 +38,7 @@ module Sunstone
       release.register_resource :cron_job, Sunstone::Objects::CronJob
       release.register_resource :daemon_set, Sunstone::Objects::DaemonSet
       release.register_resource :deployment, Sunstone::Objects::Deployment
+      release.register_resource :horizontal_pod_autoscaler, Sunstone::Objects::HorizontalPodAutoscaler
       release.register_resource :ingress, Sunstone::Objects::Ingress
       release.register_resource :job, Sunstone::Objects::Job
       release.register_resource :persistent_volume_claim, Sunstone::Objects::PersistentVolumeClaim
