@@ -15,7 +15,7 @@ module Sunstone
       end
 
       def api_version
-        'batch/v1beta1'
+        'batch/v1'
       end
 
       def pod_template

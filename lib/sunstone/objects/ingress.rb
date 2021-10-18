@@ -13,7 +13,7 @@ module Sunstone
       end
 
       def api_version
-        'extensions/v1beta1'
+        'networking.k8s.io/v1'
       end
 
       def add_rule(host, service_name = nil, path: nil, service_port: 80, &block)
