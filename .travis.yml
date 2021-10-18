@@ -1,5 +1,0 @@
-language: ruby
-
-bundler_args: --without development
-
-sudo: false
