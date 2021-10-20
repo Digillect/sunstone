@@ -1,15 +1,18 @@
-FROM ruby:2.5-alpine3.8
+FROM ruby:3.0-alpine3.14
 
 # Install Bundler 2.0
 RUN gem install bundler
 
 # Prepare data directory
-RUN mkdir -p /data/input /data/output
-VOLUME /data/input /data/output
+RUN mkdir -p /data
+VOLUME /data
 
-COPY Gemfile Gemfile.lock /usr/local/sunstone/
+COPY gems.rb gems.locked /usr/local/sunstone/
 WORKDIR /usr/local/sunstone
-RUN bundle install --without development test
+RUN bundle config set without development test && bundle install
 
 COPY bin/sunstone-docker.sh /usr/local/bin/sunstone
 COPY lib /usr/local/sunstone/lib/
+WORKDIR /data
+
+CMD ["sunstone", "--help"]

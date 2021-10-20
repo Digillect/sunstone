@@ -6,7 +6,7 @@ gem 'recursive-open-struct', '~> 1.1.0'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8.0'
-  gem 'rubocop', '~> 0.62.0'
+  gem 'rubocop', '~> 1.22.1'
 end
 
 group :test do

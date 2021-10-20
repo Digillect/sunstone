@@ -14,8 +14,19 @@ module Sunstone
         @host = host
       end
 
-      def add_path(service_name, service_port, path = nil)
-        @http.paths << HTTPIngressPath.new(service_name, service_port, path)
+      def add_service_path(service_name, service_port, path = nil, path_type = 'ImplementationSpecific')
+        @http.add_path do
+          backend.service.name = service_name
+
+          if service_port.is_a? Integer
+            backend.service.port.number = service_port
+          else
+            backend.service.port.name = service_port
+          end
+
+          @path = path
+          @path_type = path_type
+        end
       end
     end
   end

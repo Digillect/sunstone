@@ -24,7 +24,7 @@ module Sunstone
 
         port.instance_eval(&block) if block_given?
 
-        @ports << port
+        @ports << service_port
       end
     end
   end

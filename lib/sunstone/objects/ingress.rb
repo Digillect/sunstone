@@ -8,21 +8,23 @@ module Sunstone
     class Ingress < KubernetesObject
       property :spec, IngressSpec
 
-      def initialize(name)
-        super
-      end
-
       def api_version
         'networking.k8s.io/v1'
       end
 
-      def add_rule(host, service_name = nil, path: nil, service_port: 80, &block)
+      def add_service_rule(host, service_name = nil, path: nil, path_type: 'ImplementationSpecific', service_port: 80, &block)
         service_name ||= metadata.name
 
-        rule = IngressRule.new(host).tap do |r|
-          r.add_path service_name, service_port, path
+        add_ingress_rule(host) do
+          add_service_path service_name, service_port, path, path_type
 
-          r.instance_eval(&block) unless block.nil?
+          instance_eval(&block) unless block.nil?
+        end
+      end
+
+      def add_ingress_rule(host, &block)
+        rule = IngressRule.new(host).tap do |r|
+          r.instance_eval(&block) if block_given?
         end
 
         @spec.rules << rule

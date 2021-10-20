@@ -7,6 +7,7 @@ require 'sunstone/objects/daemon_set'
 require 'sunstone/objects/deployment'
 require 'sunstone/objects/horizontal_pod_autoscaler'
 require 'sunstone/objects/ingress'
+require 'sunstone/objects/ingress_class'
 require 'sunstone/objects/job'
 require 'sunstone/objects/persistent_volume_claim'
 require 'sunstone/objects/pod'
@@ -40,6 +41,7 @@ module Sunstone
       release.register_resource :deployment, Sunstone::Objects::Deployment
       release.register_resource :horizontal_pod_autoscaler, Sunstone::Objects::HorizontalPodAutoscaler
       release.register_resource :ingress, Sunstone::Objects::Ingress
+      release.register_resource :ingress_class, Sunstone::Objects::IngressClass
       release.register_resource :job, Sunstone::Objects::Job
       release.register_resource :persistent_volume_claim, Sunstone::Objects::PersistentVolumeClaim
       release.register_resource :pod, Sunstone::Objects::Pod

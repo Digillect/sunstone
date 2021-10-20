@@ -22,9 +22,9 @@ module Sunstone
 
     formatter.format objects, options, release
   rescue StandardError => err
-    puts err
-    puts err.backtrace
-
+    # puts err
+    # puts err.backtrace
+    #
     beautifier = ErrorBeautifier.new err.class, err.message, err.backtrace_locations, options.input
 
     puts beautifier.message
