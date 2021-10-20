@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_array'
-require 'sunstone/objects/parentable'
-require 'sunstone/objects/property'
-
 module Sunstone
   module Objects
     class BaseObject
@@ -114,15 +110,17 @@ module Sunstone
 
       def self.property(
         name,
-          klass = nil, item_klass = nil,
-          readonly: false, initialize: nil, test_emptiness: true,
-          serialized_name: nil,
-          serializer: nil, item_serializer: nil)
+        klass = nil, item_klass = nil,
+        readonly: false, initialize: nil, test_emptiness: true,
+        serialized_name: nil,
+        serializer: nil, item_serializer: nil,
+        valid_values: nil)
         prop = Property.new(
           name,
           klass, item_klass,
           serialized_name: serialized_name,
-          initialize: initialize, test_emptiness: test_emptiness, readonly: readonly
+          initialize: initialize, test_emptiness: test_emptiness, readonly: readonly,
+          valid_values: valid_values
         )
 
         raise "Property #{prop.string_name} is already defined in class #{self.name}" if properties.any? { |p| p.name == prop.name }

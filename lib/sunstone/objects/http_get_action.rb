@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/http_header'
-
 module Sunstone
   module Objects
     class HttpGetAction < BaseObject

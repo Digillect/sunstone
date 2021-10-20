@@ -1,6 +1,6 @@
 #!/bin/sh
 BASEDIR=$(dirname "$0")
 
-export BUNDLE_GEMFILE="${BASEDIR}/../Gemfile"
+export BUNDLE_GEMFILE="${BASEDIR}/../gems.rb"
 
-/usr/bin/env ruby "${BASEDIR}/../lib/sunstone.rb" $*
+/usr/bin/env ruby "${BASEDIR}/../sunstone.rb" $*

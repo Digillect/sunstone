@@ -1,5 +1,3 @@
-require 'sunstone/objects/base_object'
-
 module Sunstone
   module Objects
     class ObjectReference < BaseObject

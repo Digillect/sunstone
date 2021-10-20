@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/session_affinity_config'
-require 'sunstone/objects/service_port'
-
 module Sunstone
   module Objects
     class ServiceSpec < BaseObject
@@ -20,9 +16,14 @@ module Sunstone
       property :session_affinity_config, SessionAffinityConfig
 
       def add_port(port, name: nil, node_port: nil, protocol: nil, target_port: nil, &block)
-        port = ServicePort.new(port, name, node_port, protocol, target_port)
+        service_port = ServicePort.new(port)
 
-        port.instance_eval(&block) if block_given?
+        service_port.name = name
+        service_port.node_port = node_port
+        service_port.protocol = protocol
+        service_port.target_port = target_port
+
+        service_port.instance_eval(&block) if block_given?
 
         @ports << service_port
       end

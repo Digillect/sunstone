@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/kubernetes_object_metadata'
-
 module Sunstone
   module Objects
     class KubernetesObject < BaseObject

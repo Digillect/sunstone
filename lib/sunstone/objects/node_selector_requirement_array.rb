@@ -1,5 +1,3 @@
-require 'sunstone/objects/node_selector_requirement'
-
 module Sunstone
   module Objects
     class NodeSelectorRequirementArray < BaseArray

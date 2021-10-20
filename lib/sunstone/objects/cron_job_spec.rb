@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/job_template_spec'
-
 module Sunstone
   module Objects
     class CronJobSpec < BaseObject

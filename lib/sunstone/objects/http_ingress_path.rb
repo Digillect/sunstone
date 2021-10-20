@@ -1,12 +1,9 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/ingress_backend'
-
 module Sunstone
   module Objects
-    class HTTPIngressPath < BaseObject
+    class HttpIngressPath < BaseObject
       property :backend, IngressBackend
       property :path, String
-      property :path_type, String
+      property :path_type, String, valid_values: %w[Exact Prefix ImplementationSpecific].freeze
     end
   end
 end

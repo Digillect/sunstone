@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/preferred_scheduling_term'
-require 'sunstone/objects/node_selector'
-
 module Sunstone
   module Objects
     class NodeAffinity < BaseObject

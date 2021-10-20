@@ -5,9 +5,10 @@ module Sunstone
       protected
 
       def count_or_percentage(value, method_name)
-        if value.is_a? Integer
+        case value
+        when Integer
           raise ArgumentError, "#{method_name}'s value should be greater than zero" unless value.positive?
-        elsif value.is_a? String
+        when String
           valid = value.end_with? '%'
 
           if valid

@@ -1,5 +1,4 @@
 require 'yaml'
-require 'sunstone/formatters/formatter'
 
 module Sunstone
   module Formatters

@@ -1,11 +1,3 @@
-require 'sunstone/objects/config_map_volume_source'
-require 'sunstone/objects/empty_dir_volume_source'
-require 'sunstone/objects/host_path_volume_source'
-require 'sunstone/objects/nfs_volume_source'
-require 'sunstone/objects/persistent_volume_claim_volume_source'
-require 'sunstone/objects/secret_volume_source'
-require 'sunstone/objects/volume'
-
 module Sunstone
   module Objects
     class VolumeArray < BaseArray

@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/se_linux_options'
-require 'sunstone/objects/sysctl'
-
 module Sunstone
   module Objects
     class PodSecurityContext < BaseObject
@@ -9,7 +5,7 @@ module Sunstone
       property :run_as_group, Integer
       property :run_as_non_root, TrueClass
       property :run_as_user, Integer
-      property :se_linux_options, SELinuxOptions
+      property :se_linux_options, SeLinuxOptions
       property :supplemental_groups, Array, Integer
       property :sysctls, BaseArray, Sysctl
 

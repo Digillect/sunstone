@@ -12,6 +12,7 @@ WORKDIR /usr/local/sunstone
 RUN bundle config set without development test && bundle install
 
 COPY bin/sunstone-docker.sh /usr/local/bin/sunstone
+COPY sunstone.rb /usr/local/sunstone/
 COPY lib /usr/local/sunstone/lib/
 WORKDIR /data
 

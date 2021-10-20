@@ -1,8 +1,6 @@
-require 'sunstone/objects/base_object'
-
 module Sunstone
   module Objects
-    class SELinuxOptions < BaseObject
+    class SeLinuxOptions < BaseObject
       property :level, String
       property :role, String
       property :type, String

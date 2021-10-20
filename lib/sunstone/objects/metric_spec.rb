@@ -1,9 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/external_metric_source'
-require 'sunstone/objects/object_metric_source'
-require 'sunstone/objects/pods_metric_source'
-require 'sunstone/objects/resource_metric_source'
-
 module Sunstone
   module Objects
     class MetricSpec < BaseObject

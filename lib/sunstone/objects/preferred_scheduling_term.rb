@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/node_selector_term'
-
 module Sunstone
   module Objects
     class PreferredSchedulingTerm < BaseObject

@@ -1,5 +1,3 @@
-require 'sunstone/objects/env_var_source'
-
 module Sunstone
   module Objects
     class EnvVar

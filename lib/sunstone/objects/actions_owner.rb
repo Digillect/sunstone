@@ -1,7 +1,4 @@
 require 'active_support/concern'
-require 'sunstone/objects/exec_action'
-require 'sunstone/objects/http_get_action'
-require 'sunstone/objects/tcp_socket_action'
 
 module Sunstone
   module Objects

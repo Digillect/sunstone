@@ -1,6 +1,3 @@
-require 'sunstone/objects/capabilities'
-require 'sunstone/objects/se_linux_options'
-
 module Sunstone
   module Objects
     class SecurityContext < BaseObject
@@ -12,7 +9,7 @@ module Sunstone
       property :run_as_group, Integer
       property :run_as_non_root, TrueClass
       property :run_as_user, Integer
-      property :se_linux_options, SELinuxOptions
+      property :se_linux_options, SeLinuxOptions
     end
   end
 end

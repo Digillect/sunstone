@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/config_map_or_secret'
-
 module Sunstone
   module Objects
     class ConfigMap < KubernetesObject

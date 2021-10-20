@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/weighted_pod_affinity_term'
-require 'sunstone/objects/pod_affinity_term'
-
 module Sunstone
   module Objects
     class PodAffinity < BaseObject

@@ -1,5 +1,4 @@
 require 'hashie/mash'
-require 'sunstone/objects/kubernetes_object'
 
 module Sunstone
   module Objects

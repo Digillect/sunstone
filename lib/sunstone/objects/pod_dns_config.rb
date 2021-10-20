@@ -1,11 +1,8 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/pod_dns_config_option'
-
 module Sunstone
   module Objects
-    class PodDNSConfig < BaseObject
+    class PodDnsConfig < BaseObject
       property :nameservers, Array, String
-      property :options, BaseArray, PodDNSConfigOption
+      property :options, BaseArray, PodDnsConfigOption
       property :searches, Array, String
 
       def nameservers(*values)
@@ -17,7 +14,7 @@ module Sunstone
       alias nameserver nameservers
 
       def option(name, value = nil, &block)
-        option = PodDNSConfigOption.new(name, value)
+        option = PodDnsConfigOption.new(name, value)
 
         option.instance_eval(&block) if block_given?
 

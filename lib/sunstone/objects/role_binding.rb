@@ -1,5 +1,3 @@
-require 'sunstone/objects/cluster_role_binding'
-
 module Sunstone
   module Objects
     class RoleBinding < ClusterRoleBinding

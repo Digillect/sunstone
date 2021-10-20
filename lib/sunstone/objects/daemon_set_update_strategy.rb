@@ -1,5 +1,3 @@
-require 'sunstone/objects/rolling_update_daemon_set'
-
 module Sunstone
   module Objects
     class DaemonSetUpdateStrategy

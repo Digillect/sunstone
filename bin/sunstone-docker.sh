@@ -1,4 +1,7 @@
 #!/bin/sh
-export BUNDLE_GEMFILE=/usr/local/sunstone/gems.rb
 
-/usr/bin/env ruby /usr/local/sunstone/lib/sunstone.rb $*
+SUNSTONE_DIR=/usr/local/sunstone
+
+export BUNDLE_GEMFILE=$SUNSTONE_DIR/gems.rb
+
+/usr/bin/env ruby $SUNSTONE_DIR/sunstone.rb $*

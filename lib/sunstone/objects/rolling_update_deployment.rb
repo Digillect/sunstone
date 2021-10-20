@@ -1,5 +1,3 @@
-require 'sunstone/objects/rolling_update_base'
-
 module Sunstone
   module Objects
     class RollingUpdateDeployment < RollingUpdateBase

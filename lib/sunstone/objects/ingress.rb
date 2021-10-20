@@ -1,8 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/ingress_rule'
-require 'sunstone/objects/ingress_spec'
-require 'sunstone/objects/ingress_tls'
-
 module Sunstone
   module Objects
     class Ingress < KubernetesObject
@@ -12,7 +7,7 @@ module Sunstone
         'networking.k8s.io/v1'
       end
 
-      def add_service_rule(host, service_name = nil, path: nil, path_type: 'ImplementationSpecific', service_port: 80, &block)
+      def add_service_rule(host, service_name = nil, path: nil, path_type: :ImplementationSpecific, service_port: 80, &block)
         service_name ||= metadata.name
 
         add_ingress_rule(host) do
@@ -31,7 +26,7 @@ module Sunstone
       end
 
       def add_tls(secret_name, *hosts)
-        @spec.tls << IngressTLS.new(secret_name, *hosts)
+        @spec.tls << IngressTls.new(secret_name, *hosts)
       end
     end
   end

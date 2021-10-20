@@ -1,8 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/label_selector'
-require 'sunstone/objects/resource_requirements'
-require 'sunstone/objects/typed_local_object_reference'
-
 module Sunstone
   module Objects
     class PersistentVolumeClaimSpec < BaseObject

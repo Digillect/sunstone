@@ -1,13 +1,10 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/http_ingress_path'
-
 module Sunstone
   module Objects
-    class HTTPIngressRuleValue < BaseObject
-      property :paths, BaseArray, HTTPIngressPath
+    class HttpIngressRuleValue < BaseObject
+      property :paths, BaseArray, HttpIngressPath
 
       def add_path(&block)
-        path = HTTPIngressPath.new
+        path = HttpIngressPath.new
 
         path.instance_eval(&block) unless block.nil?
 

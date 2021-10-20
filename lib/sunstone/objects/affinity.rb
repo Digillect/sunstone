@@ -1,8 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/node_affinity'
-require 'sunstone/objects/pod_affinity'
-require 'sunstone/objects/pod_anti_affinity'
-
 module Sunstone
   module Objects
     class Affinity < BaseObject

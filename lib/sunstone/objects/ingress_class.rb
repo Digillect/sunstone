@@ -1,8 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/ingress_rule'
-require 'sunstone/objects/ingress_class_spec'
-
-
 module Sunstone
   module Objects
     class IngressClass < KubernetesObject

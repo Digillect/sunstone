@@ -1,8 +1,6 @@
-require 'sunstone/objects/base_object'
-
 module Sunstone
   module Objects
-    class IngressTLS < BaseObject
+    class IngressTls < BaseObject
       property :secret_name, String
       property :hosts, Array, String, initialize: false
 

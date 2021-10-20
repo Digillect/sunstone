@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/cross_version_object_reference'
-require 'sunstone/objects/metric_spec'
-
 module Sunstone
   module Objects
     class HorizontalPodAutoscalerSpec < BaseObject

@@ -1,8 +1,6 @@
-require 'sunstone/objects/base_object'
-
 module Sunstone
   module Objects
-    class PodDNSConfigOption < BaseObject
+    class PodDnsConfigOption < BaseObject
       property :name, String
       property :value, String, serializer: ->(value) { value.to_s }
 

@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/custom_resource'
-
 module Sunstone
   class Release
     attr_reader :objects

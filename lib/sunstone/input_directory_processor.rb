@@ -15,13 +15,6 @@ module Sunstone
 
       begin
         process_directory components
-      rescue StandardError => err
-        backtrace = err.backtrace.select { |line| line.start_with? @input_directory }
-
-        new_err = err.class.new err.message
-        new_err.set_backtrace backtrace
-
-        raise new_err
       ensure
         teardown_constants
       end

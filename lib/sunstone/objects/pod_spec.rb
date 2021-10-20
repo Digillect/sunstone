@@ -1,21 +1,10 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/affinity'
-require 'sunstone/objects/container'
-require 'sunstone/objects/host_alias'
-require 'sunstone/objects/local_object_reference'
-require 'sunstone/objects/pod_dns_config'
-require 'sunstone/objects/pod_readiness_gate'
-require 'sunstone/objects/pod_security_context'
-require 'sunstone/objects/toleration'
-require 'sunstone/objects/volume_array'
-
 module Sunstone
   module Objects
     class PodSpec < BaseObject
       property :active_deadline_seconds, Integer
       property :affinity, Affinity
       property :automount_service_account_token, TrueClass
-      property :dns_config, PodDNSConfig
+      property :dns_config, PodDnsConfig
       property :dns_policy, String
       property :enable_service_links, TrueClass
       property :host_aliases, BaseArray, HostAlias

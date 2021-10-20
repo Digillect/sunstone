@@ -1,5 +1,4 @@
 require 'forwardable'
-require 'sunstone/objects/parentable'
 
 module Sunstone
   module Objects

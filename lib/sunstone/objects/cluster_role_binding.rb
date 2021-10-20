@@ -1,7 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/role_ref'
-require 'sunstone/objects/subject'
-
 module Sunstone
   module Objects
     class ClusterRoleBinding < KubernetesObject

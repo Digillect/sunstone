@@ -3,14 +3,19 @@ require 'active_support/core_ext'
 
 module Sunstone
   module Objects
+    class ValidationError < StandardError
+    end
+
     class Property
       attr_reader :name, :serialized_name, :string_name, :variable
       attr_reader :klass, :item_klass
       attr_accessor :serializer, :item_serializer
 
-      def initialize(name, klass = nil, item_klass = nil, serialized_name: nil, initialize: nil, readonly: false, test_emptiness: true)
+      def initialize(name, klass = nil, item_klass = nil, serialized_name: nil, initialize: nil, readonly: false, test_emptiness: true, valid_values: nil)
         raise ArgumentError, 'Property name must be a String or Symbol' unless name.is_a?(String) || name.is_a?(Symbol)
-        raise ArgumentError, 'Serialized name must be a String or Symbol' unless serialized_name.nil? || serialized_name.is_a?(String) || serialized_name.is_a?(Symbol)
+        unless serialized_name.nil? || serialized_name.is_a?(String) || serialized_name.is_a?(Symbol)
+          raise ArgumentError, 'Serialized name must be a String or Symbol'
+        end
 
         string_name = name.to_s
         serialized_name ||= string_name.camelize(:lower)
@@ -26,6 +31,8 @@ module Sunstone
         @initialize = initialize
         @readonly = readonly
         @test_emptiness = test_emptiness
+
+        @valid_values = valid_values
 
         @scalar = nil
         @boolean = nil
@@ -136,9 +143,22 @@ module Sunstone
 
       def create_scalar_writer(target_klass)
         variable = @variable
+        valid_values = @valid_values
 
-        target_klass.send :define_method, "#{@string_name}=" do |value|
-          instance_variable_set variable, value
+        if valid_values
+          target_klass.send :define_method, "#{@string_name}=" do |value|
+            value = value.to_s if value.is_a?(Symbol)
+
+            unless valid_values.include? value
+              raise ValidationError, "Invalid value '#{value}', allowed values are: #{valid_values.join(', ')}"
+            end
+
+            instance_variable_set variable, value
+          end
+        else
+          target_klass.send :define_method, "#{@string_name}=" do |value|
+            instance_variable_set variable, value
+          end
         end
       end
 

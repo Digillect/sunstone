@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/key_to_path'
-
 module Sunstone
   module Objects
     class ConfigMapVolumeSource < BaseObject

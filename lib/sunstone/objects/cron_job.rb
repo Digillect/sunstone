@@ -1,6 +1,3 @@
-require 'sunstone/objects/cron_job_spec'
-require 'sunstone/objects/pod_template_extensions'
-
 module Sunstone
   module Objects
     class CronJob < KubernetesObject

@@ -1,6 +1,3 @@
-require 'sunstone/objects/config_map_env_source'
-require 'sunstone/objects/secret_env_source'
-
 module Sunstone
   module Objects
     class EnvFromSource

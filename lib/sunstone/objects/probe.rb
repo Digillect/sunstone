@@ -1,5 +1,3 @@
-require 'sunstone/objects/actions_owner'
-
 module Sunstone
   module Objects
     class Probe < BaseObject

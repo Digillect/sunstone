@@ -1,5 +1,3 @@
-require 'sunstone/objects/rolling_update_stateful_set_strategy'
-
 module Sunstone
   module Objects
     class StatefulSetUpdateStrategy

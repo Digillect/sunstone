@@ -1,6 +1,7 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'hashie/mash'
+require 'yaml'
 
 module Sunstone
   class ValuesManager

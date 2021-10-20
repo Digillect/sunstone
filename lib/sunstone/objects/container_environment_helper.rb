@@ -1,12 +1,3 @@
-require 'sunstone/objects/env_var'
-require 'sunstone/objects/env_from_source'
-require 'sunstone/objects/config_map_key_selector'
-require 'sunstone/objects/secret_key_selector'
-require 'sunstone/objects/object_field_selector'
-require 'sunstone/objects/resource_field_selector'
-require 'sunstone/objects/config_map_env_source'
-require 'sunstone/objects/secret_env_source'
-
 module Sunstone
   module Objects
     class ContainerEnvironmentHelper

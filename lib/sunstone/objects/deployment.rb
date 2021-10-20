@@ -1,8 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/deployment_spec'
-require 'sunstone/objects/pod_template_owner'
-require 'sunstone/objects/pod_template_extensions'
-
 module Sunstone
   module Objects
     class Deployment < KubernetesObject

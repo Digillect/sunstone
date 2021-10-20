@@ -1,5 +1,4 @@
 require 'json'
-require 'sunstone/formatters/formatter'
 
 module Sunstone
   module Formatters

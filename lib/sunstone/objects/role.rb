@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/policy_rule'
-
 module Sunstone
   module Objects
     class Role < KubernetesObject

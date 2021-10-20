@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/service_spec'
-
 module Sunstone
   module Objects
     class Service < KubernetesObject

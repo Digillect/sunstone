@@ -1,7 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/local_object_reference'
-require 'sunstone/objects/object_reference'
-
 module Sunstone
   module Objects
     class ServiceAccount < KubernetesObject

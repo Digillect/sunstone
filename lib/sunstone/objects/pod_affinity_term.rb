@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/label_selector'
-
 module Sunstone
   module Objects
     class PodAffinityTerm < BaseObject

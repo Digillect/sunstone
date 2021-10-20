@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/pod_spec'
-
 module Sunstone
   module Objects
     class Pod < KubernetesObject

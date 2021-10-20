@@ -1,6 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/label_selector_requirement'
-
 module Sunstone
   module Objects
     class LabelSelector < BaseObject

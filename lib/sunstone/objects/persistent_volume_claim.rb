@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/persistent_volume_claim_spec'
-
 module Sunstone
   module Objects
     class PersistentVolumeClaim < KubernetesObject

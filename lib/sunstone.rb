@@ -1,11 +1,3 @@
-$LOAD_PATH.unshift __dir__
-
-require 'rubygems'
-require 'bundler/setup'
-
-Bundler.require(:default)
-
-require 'sunstone/main'
-
-Sunstone.run
-
+module Sunstone
+  VERSION = '0.7.6'.freeze
+end

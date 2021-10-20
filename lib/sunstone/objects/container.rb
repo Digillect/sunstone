@@ -1,13 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/container_port'
-require 'sunstone/objects/container_environment_helper'
-require 'sunstone/objects/lifecycle'
-require 'sunstone/objects/probe'
-require 'sunstone/objects/resource_requirements'
-require 'sunstone/objects/security_context'
-require 'sunstone/objects/volume_device'
-require 'sunstone/objects/volume_mount'
-
 module Sunstone
   module Objects
     class Container < BaseObject

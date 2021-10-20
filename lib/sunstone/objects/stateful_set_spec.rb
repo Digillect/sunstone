@@ -1,8 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/label_selector'
-require 'sunstone/objects/pod_template_spec'
-require 'sunstone/objects/stateful_set_update_strategy'
-
 module Sunstone
   module Objects
     class StatefulSetSpec < BaseObject

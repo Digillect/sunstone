@@ -1,7 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/aggregation_rule'
-require 'sunstone/objects/policy_rule'
-
 module Sunstone
   module Objects
     class ClusterRole < KubernetesObject

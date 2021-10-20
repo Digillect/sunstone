@@ -1,7 +1,3 @@
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/label_selector'
-require 'sunstone/objects/pod_template_spec'
-
 module Sunstone
   module Objects
     class JobSpec < BaseObject

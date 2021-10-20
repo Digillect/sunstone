@@ -1,6 +1,3 @@
-require 'sunstone/objects/kubernetes_object'
-require 'sunstone/objects/horizontal_pod_autoscaler_spec'
-
 module Sunstone
   module Objects
     class HorizontalPodAutoscaler < KubernetesObject

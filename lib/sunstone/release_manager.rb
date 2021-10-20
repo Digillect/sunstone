@@ -1,23 +1,3 @@
-require 'sunstone/release'
-require 'sunstone/objects/cluster_role'
-require 'sunstone/objects/cluster_role_binding'
-require 'sunstone/objects/config_map'
-require 'sunstone/objects/cron_job'
-require 'sunstone/objects/daemon_set'
-require 'sunstone/objects/deployment'
-require 'sunstone/objects/horizontal_pod_autoscaler'
-require 'sunstone/objects/ingress'
-require 'sunstone/objects/ingress_class'
-require 'sunstone/objects/job'
-require 'sunstone/objects/persistent_volume_claim'
-require 'sunstone/objects/pod'
-require 'sunstone/objects/role'
-require 'sunstone/objects/role_binding'
-require 'sunstone/objects/secret'
-require 'sunstone/objects/service'
-require 'sunstone/objects/service_account'
-require 'sunstone/objects/stateful_set'
-
 module Sunstone
   class ReleaseManager
     def self.create_and_publish_release
