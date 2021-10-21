@@ -5,12 +5,10 @@ module Sunstone
     class Secret < KubernetesObject
       include ConfigMapOrSecret
 
+      api_version 'v1'
+
       property :type, String
       property :data, Hash, item_serializer: ->(value) { Base64.strict_encode64(value ? value.to_s : '') }
-
-      def api_version
-        'v1'
-      end
     end
   end
 end

@@ -66,20 +66,12 @@ module Sunstone
     def register_custom_resource(resource, kind, api_version)
       resource = resource.to_sym
 
-      raise "Custom resource #{resource.to_s} is already registered" if @resource_to_class.key? resource
+      raise "Custom resource #{resource} is already registered" if @resource_to_class.key? resource
 
-      _kind = kind
-      _api_version = api_version
+      klass = Class.new Sunstone::Objects::CustomResource
 
-      klass = Class.new Sunstone::Objects::CustomResource do
-        define_method :kind do
-          _kind
-        end
-
-        define_method :api_version do
-          _api_version
-        end
-      end
+      klass.instance_variable_set :@api_kind, kind
+      klass.instance_variable_set :@api_group_and_version, api_version
 
       register_resource resource, klass
     end

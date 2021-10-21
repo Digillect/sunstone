@@ -1,11 +1,9 @@
 module Sunstone
   module Objects
     class Role < KubernetesObject
-      property :rules, BaseArray, PolicyRule
+      api_version 'rbac.authorization.k8s.io/v1'
 
-      def api_version
-        'rbac.authorization.k8s.io/v1'
-      end
+      property :rules, BaseArray, PolicyRule
 
       def add_rule(&block)
         rule = PolicyRule.new

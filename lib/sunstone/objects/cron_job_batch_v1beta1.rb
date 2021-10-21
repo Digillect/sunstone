@@ -1,9 +1,9 @@
 module Sunstone
   module Objects
-    class CronJob < KubernetesObject
+    class CronJobBatchV1beta1 < KubernetesObject
       include PodTemplateExtensions
 
-      api_version 'batch/v1'
+      api_version 'batch/v1beta1', 'CronJob'
 
       property :spec, CronJobSpec
 

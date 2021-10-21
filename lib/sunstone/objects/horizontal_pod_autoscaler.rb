@@ -1,15 +1,9 @@
 module Sunstone
   module Objects
     class HorizontalPodAutoscaler < KubernetesObject
+      api_version 'autoscaling/v2beta2'
+
       property :spec, HorizontalPodAutoscalerSpec
-
-      def initialize(name)
-        super
-      end
-
-      def api_version
-        'autoscaling/v2beta2'
-      end
 
       def scale_deployment(name, &block)
         spec.scale_target_ref.api_version 'apps/v1'

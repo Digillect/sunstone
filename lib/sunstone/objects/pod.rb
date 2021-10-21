@@ -1,15 +1,9 @@
 module Sunstone
   module Objects
     class Pod < KubernetesObject
+      api_version 'v1'
+
       property :spec, PodSpec
-
-      def initialize(name)
-        super
-      end
-
-      def api_version
-        'v1'
-      end
 
       alias pod_spec spec
 

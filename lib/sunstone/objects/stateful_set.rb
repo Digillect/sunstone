@@ -4,11 +4,9 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      property :spec, StatefulSetSpec
+      api_version 'apps/v1'
 
-      def api_version
-        'apps/v1'
-      end
+      property :spec, StatefulSetSpec
 
       def volume_claim(name, &block)
         claim = PersistentVolumeClaim.new(name)

@@ -1,9 +1,7 @@
 module Sunstone
   module Objects
     class RoleBinding < ClusterRoleBinding
-      def initialize(name)
-        super
-      end
+      api_version 'rbac.authorization.k8s.io/v1'
 
       def namespace(value = nil)
         metadata.namespace = value if value

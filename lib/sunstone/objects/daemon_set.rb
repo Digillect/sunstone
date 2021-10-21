@@ -4,11 +4,9 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
-      property :spec, DaemonSetSpec
+      api_version 'apps/v1'
 
-      def api_version
-        'apps/v1'
-      end
+      property :spec, DaemonSetSpec
     end
   end
 end

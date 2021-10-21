@@ -1,15 +1,9 @@
 module Sunstone
   module Objects
     class IngressClass < KubernetesObject
+      api_version 'networking.k8s.io/v1'
+
       property :spec, IngressClassSpec
-
-      def initialize(name)
-        super
-      end
-
-      def api_version
-        'networking.k8s.io/v1'
-      end
 
       def add_rule(host, service_name = nil, path: nil, path_type: 'ImplementationSpecific', service_port: 80, &block)
         service_name ||= metadata.name

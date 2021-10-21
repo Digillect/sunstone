@@ -3,15 +3,9 @@ module Sunstone
     class ConfigMap < KubernetesObject
       include ConfigMapOrSecret
 
+      api_version 'v1'
+
       property :data, Hash, item_serializer: ->(value) { value.to_s }
-
-      def initialize(name)
-        super
-      end
-
-      def api_version
-        'v1'
-      end
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'active_support/concern'
+
 module Sunstone
   module Objects
     module Parentable
@@ -8,7 +10,7 @@ module Sunstone
       end
 
       def __root
-        return self unless __parent&.is_a?(Parentable)
+        return self unless __parent.is_a?(Parentable)
 
         __parent.__root
       end

@@ -1,15 +1,9 @@
 module Sunstone
   module Objects
     class PersistentVolumeClaim < KubernetesObject
+      api_version 'v1'
+
       property :spec, PersistentVolumeClaimSpec
-
-      def initialize(name)
-        super
-      end
-
-      def api_version
-        'v1'
-      end
 
       def access_modes(*args)
         @spec.access_modes.concat args

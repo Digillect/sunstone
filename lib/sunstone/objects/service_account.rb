@@ -1,13 +1,11 @@
 module Sunstone
   module Objects
     class ServiceAccount < KubernetesObject
+      api_version 'v1'
+
       property :automount_service_account_token, TrueClass
       property :image_pull_secrets, BaseArray, LocalObjectReference
       property :secrets, BaseArray, ObjectReference
-
-      def api_version
-        'v1'
-      end
 
       def image_pull_secrets(*names)
         return @image_pull_secrets if names.empty?

@@ -3,11 +3,12 @@ require 'optparse'
 module Sunstone
   class Runner
     def run
-      options = parse_options(ARGV)
+      release_manager = ReleaseManager.new
+      options = parse_options(ARGV, release_manager)
 
       raise "Input directory #{options.input} does not exists." unless Dir.exist? options.input_directory
 
-      release = create_release options
+      release = create_release options, release_manager
       objects = release.objects
 
       formatter_class = "Sunstone::Formatters::#{options.format.capitalize}Formatter".constantize
@@ -29,14 +30,13 @@ module Sunstone
 
     private
 
-    def create_release(options)
+    def create_release(options, release_manager)
       Dir.chdir options.input_directory do
         values_manager = ValuesManager.new options.debug
 
         values = values_manager.combine options.input_directory, options.value_files, options.variables
 
-        release_manager = ReleaseManager.new
-        release = release_manager.create_release
+        release = release_manager.create_release options.api_version
 
         input_directory_processor = InputDirectoryProcessor.new options.input_directory, values, release
 
@@ -48,7 +48,8 @@ module Sunstone
 
     FORMATS = %w[yaml json].freeze
 
-    def parse_options(args)
+    # @param [ReleaseManager] release_manager
+    def parse_options(args, release_manager)
       options = OpenStruct.new
 
       opt_parser = OptionParser.new do |opts|
@@ -59,7 +60,18 @@ module Sunstone
         opts.separator ''
         opts.separator 'Options:'
 
-        options.output = STDOUT
+        options.api_version = release_manager.default_version
+        opts.on '--api-version VERSION', "specify Kubernetes API version for resource generation, default is #{release_manager.default_version}" do |v|
+          unless release_manager.available_versions.include? v
+            puts "Invalid Kubernetes API version (#{v}) specified, valid versions are: #{release_manager.available_versions.join(', ')}"
+
+            exit 33
+          end
+
+          options.api_version = v
+        end
+
+        options.output = $stdout
         opts.on '-o', '--output PATH', 'specify path to output file or directory, defaults to standard output' do |path|
           options.output = File.absolute_path(path)
         end

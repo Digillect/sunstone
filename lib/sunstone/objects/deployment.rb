@@ -4,15 +4,9 @@ module Sunstone
       include PodTemplateOwner
       include PodTemplateExtensions
 
+      api_version 'apps/v1'
+
       property :spec, DeploymentSpec
-
-      def initialize(name)
-        super
-      end
-
-      def api_version
-        'apps/v1'
-      end
 
       def match_labels(labels = {})
         labels = labels.transform_values(&:to_s)
