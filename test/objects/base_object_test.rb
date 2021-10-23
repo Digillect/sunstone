@@ -1,7 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/parentable'
-
 class BaseObjectTest < Minitest::Test
   def test_properties_are_remembered
     klass = Class.new(Sunstone::Objects::BaseObject) do

@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/subject'
-
 class SubjectTest < Minitest::Test
   def test_initialization
     sut = Sunstone::Objects::Subject.new(:ConfigMap, :test, :default)

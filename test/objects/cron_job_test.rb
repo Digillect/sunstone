@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/cron_job'
-
 class CronJobTest < Minitest::Test
   attr_reader :sut
 

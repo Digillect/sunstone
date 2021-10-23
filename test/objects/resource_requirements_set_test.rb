@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/resource_requirements_set'
-
 class ResourceRequirementsSetTest < Minitest::Test
   attr_reader :sut
 

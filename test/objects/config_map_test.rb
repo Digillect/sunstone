@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/config_map'
-
 class ConfigMapTest < Minitest::Test
   attr_reader :sut
 

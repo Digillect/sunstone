@@ -1,5 +1,3 @@
-require 'test_helper'
-
 class KubernetesObjectMetadataTest < Minitest::Test
   def test_initialization
     sut = Sunstone::Objects::KubernetesObjectMetadata.new

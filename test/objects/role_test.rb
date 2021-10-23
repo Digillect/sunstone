@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/role'
-
 class RoleTest < Minitest::Test
   attr_reader :sut
 

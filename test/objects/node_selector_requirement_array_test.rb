@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/node_selector_requirement_array'
-
 class NodeSelectorRequirementArrayTest < Minitest::Test
   attr_reader :sut
 

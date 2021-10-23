@@ -52,7 +52,7 @@ module Sunstone
       API_VERSION_MAP.keys.map(&:to_s)
     end
 
-    def create_release(version)
+    def create_release(version = nil)
       version ||= DEFAULT_VERSION
 
       map = API_VERSION_MAP[version.to_sym]

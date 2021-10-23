@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/config_map_or_secret_env_source'
-
 class ConfigMapOrSecretEnvSourceTest < Minitest::Test
   def test_initialization
     sut = Sunstone::Objects::ConfigMapOrSecretEnvSource.new :test

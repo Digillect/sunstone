@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/values_manager'
-
 class ValuesManagerTest < Minitest::Test
   attr_reader :sut
 

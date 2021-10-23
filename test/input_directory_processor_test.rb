@@ -1,8 +1,5 @@
 require 'test_helper'
 require 'English'
-require 'sunstone/input_directory_processor'
-require 'sunstone/release_manager'
-require 'sunstone/values_manager'
 
 class InputDirectoryProcessorTest < Minitest::Test
   def test_underscore_files_are_loaded_first
@@ -34,45 +31,6 @@ class InputDirectoryProcessorTest < Minitest::Test
     assert_output "hello#{$INPUT_RECORD_SEPARATOR}world#{$INPUT_RECORD_SEPARATOR}" do
       sut.process
     end
-  end
-
-  def test_simple_backtrace_is_filtered
-    sut = Sunstone::InputDirectoryProcessor.new File.join(__dir__, 'data/with_errors'), nil, nil
-
-    backtrace = nil
-
-    begin
-      sut.process
-    rescue StandardError => err
-      backtrace = err.backtrace
-    end
-
-    refute_nil backtrace
-    refute_empty backtrace
-    assert_equal 1, backtrace.length
-
-    location = backtrace.first
-
-    assert_match /file\.rb:2/, location
-  end
-
-  def test_nested_backtrace_is_filtered
-    release_manager = Sunstone::ReleaseManager.new
-    release = release_manager.create_release
-
-    sut = Sunstone::InputDirectoryProcessor.new File.join(__dir__, 'data/nested_errors'), nil, release
-
-    backtrace = nil
-
-    begin
-      sut.process
-    rescue StandardError => err
-      backtrace = err.backtrace
-    end
-
-    refute_nil backtrace
-    refute_empty backtrace
-    assert_equal 4, backtrace.length
   end
 
   def test_nested_folder

@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/role_ref'
-
 class RoleRefTest < Minitest::Test
   def test_initialization
     sut = Sunstone::Objects::RoleRef.new :a, :b, :c

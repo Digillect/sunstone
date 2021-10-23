@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/deployment'
-
 class DeploymentTest < Minitest::Test
   attr_reader :sut
 

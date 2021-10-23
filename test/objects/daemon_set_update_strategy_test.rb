@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/daemon_set_update_strategy'
-
 class DaemonSetUpdateStrategyTest < Minitest::Test
   def setup
     @sut = Sunstone::Objects::DaemonSetUpdateStrategy.new

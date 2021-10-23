@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/affinity'
-
 class AffinityTest < Minitest::Test
   attr_reader :sut
 

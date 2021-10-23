@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/cluster_role'
-
 class ClusterRoleTest < Minitest::Test
   attr_reader :sut
 

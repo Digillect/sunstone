@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/daemon_set'
-
 class DaemonSetTest < Minitest::Test
   attr_reader :sut
 

@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/ingress'
-
 class IngressTest < Minitest::Test
   attr_reader :sut
 
@@ -11,29 +8,29 @@ class IngressTest < Minitest::Test
   def test_properties_and_methods
     assert_property sut, :spec
 
-    assert_respond_to sut, :add_rule
+    assert_respond_to sut, :add_service_rule
     assert_respond_to sut, :add_tls
   end
 
   def test_add_rule_uses_provided_service_name
-    sut.add_rule 'www.example.org', :frontend
+    sut.add_service_rule 'www.example.org', :frontend
 
-    assert_equal :frontend, sut.spec.rules.first.http.paths.first.backend.service_name
+    assert_equal :frontend, sut.spec.rules.first.http.paths.first.backend.service.name
   end
 
   def test_add_rule_uses_ingress_name_when_service_name_is_not_provided
-    sut.add_rule 'www.example.org'
+    sut.add_service_rule 'www.example.org'
 
-    assert_equal :test, sut.spec.rules.first.http.paths.first.backend.service_name
+    assert_equal :test, sut.spec.rules.first.http.paths.first.backend.service.name
   end
 
   def test_add_rule_with_multiple_paths
-    sut.add_rule 'www.example.org' do
-      add_path :api, 80, '/api'
+    sut.add_service_rule 'www.example.org' do
+      add_service_path :api, 80, '/api', :Exact
     end
 
     expected = {
-      apiVersion: 'extensions/v1beta1',
+      apiVersion: 'networking.k8s.io/v1',
       kind: 'Ingress',
       metadata: {
         name: 'test'
@@ -46,16 +43,26 @@ class IngressTest < Minitest::Test
               paths: [
                 {
                   backend: {
-                    serviceName: 'test',
-                    servicePort: 80
-                  }
+                    service: {
+                      name: 'test',
+                      port: {
+                        number: 80
+                      }
+                    }
+                  },
+                  pathType: 'ImplementationSpecific'
                 },
                 {
                   backend: {
-                    serviceName: 'api',
-                    servicePort: 80
+                    service: {
+                      name: 'api',
+                      port: {
+                        number: 80
+                      }
+                    }
                   },
-                  path: '/api'
+                  path: '/api',
+                  pathType: 'Exact'
                 }
               ]
             }

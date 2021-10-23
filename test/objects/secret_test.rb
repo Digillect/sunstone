@@ -1,6 +1,4 @@
-require 'test_helper'
 require 'base64'
-require 'sunstone/objects/secret'
 
 class SecretTest < Minitest::Test
   attr_reader :sut

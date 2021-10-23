@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/property'
-
 class PropertyCreateMethodsTest < Minitest::Test
   def test_readonly_scalar_property_factory
     klass = create_klass :value, Integer, readonly: true
@@ -190,8 +187,28 @@ class PropertyCreateMethodsTest < Minitest::Test
     assert_same array, result
   end
 
-  def create_klass(name, klass, item_klass = nil, readonly: false, &block)
-    pd = Sunstone::Objects::Property.new name, klass, item_klass, readonly: readonly
+  def test_accepts_valid_value
+    klass = create_klass :value, Integer, valid_values: [1, 3]
+
+    sut = klass.new
+
+    sut.value = 3
+  end
+
+  def test_rejects_invalid_value
+    klass = create_klass :value, Integer, valid_values: [1, 3]
+
+    sut = klass.new
+
+    error = assert_raises Sunstone::Objects::ValidationError do
+      sut.value = 42
+    end
+
+    assert_equal "Invalid value '42', allowed values are: 1, 3", error.message
+  end
+
+  def create_klass(name, klass, item_klass = nil, readonly: false, valid_values: nil, &block)
+    pd = Sunstone::Objects::Property.new name, klass, item_klass, readonly: readonly, valid_values: valid_values
 
     klass = Class.new
 

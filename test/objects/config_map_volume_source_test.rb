@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/config_map_volume_source'
-
 class ConfigMapVolumeSourceTest < Minitest::Test
   attr_reader :sut
 

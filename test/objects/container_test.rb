@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/container'
-
 class ContainerTest < Minitest::Test
   attr_reader :sut
 

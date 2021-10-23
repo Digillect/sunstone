@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/stateful_set'
-
 class StatefulSetTest < MiniTest::Test
   attr_reader :sut
 

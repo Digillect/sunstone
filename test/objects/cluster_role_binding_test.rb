@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/cluster_role_binding'
-
 class ClusterRoleBindingTest < Minitest::Test
   attr_reader :sut
 

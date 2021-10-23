@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/service'
-
 class ServiceTest < MiniTest::Test
   attr_reader :sut
 

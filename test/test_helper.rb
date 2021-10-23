@@ -1,8 +1,12 @@
-$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
-
 require 'bundler/setup'
 
 Bundler.require(:default, :test)
+
+require 'zeitwerk'
+
+loader = Zeitwerk::Loader.new
+loader.push_dir File.expand_path('../lib', File.dirname(__FILE__))
+loader.setup # ready!
 
 require 'minitest/autorun'
 require 'minitest/reporters'
@@ -13,4 +17,4 @@ require 'active_support/core_ext'
 
 require 'assertions'
 
-MiniTest::Reporters.use!
+#MiniTest::Reporters.use!

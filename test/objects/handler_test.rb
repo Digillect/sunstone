@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/handler'
-
 class HandlerTest < Minitest::Test
   attr_reader :sut
 

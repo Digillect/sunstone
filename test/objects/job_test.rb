@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/job'
-
 class JobTest < Minitest::Test
   attr_reader :sut
 

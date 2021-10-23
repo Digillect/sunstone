@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/persistent_volume_claim'
-
 class PersistentVolumeClaimTest < Minitest::Test
   attr_reader :sut
 

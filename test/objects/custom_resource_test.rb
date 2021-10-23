@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/custom_resource'
-
 class CustomResourceTest < Minitest::Test
   def test_fields
     sut = TestResource.new :test
@@ -13,8 +10,6 @@ class CustomResourceTest < Minitest::Test
   end
 
   class TestResource < Sunstone::Objects::CustomResource
-    def api_version
-      'example.org/v1'
-    end
+    @api_group_and_version = 'example.org/v1'
   end
 end

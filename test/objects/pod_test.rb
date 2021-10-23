@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/pod'
-
 class PodTest < Minitest::Test
   attr_reader :sut
 

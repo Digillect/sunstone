@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/lifecycle'
-
 class LifecycleTest < Minitest::Test
   attr_reader :sut
 

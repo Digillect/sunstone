@@ -1,5 +1,3 @@
-require 'test_helper'
-
 class KubernetesObjectTest < Minitest::Test
   def test_metadata_created
     sut = Sunstone::Objects::KubernetesObject.new nil

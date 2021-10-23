@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/base_array'
-
 class BaseArrayTest < Minitest::Test
   attr_reader :sut
 
@@ -28,6 +25,8 @@ class BaseArrayTest < Minitest::Test
       include Sunstone::Objects::Parentable
 
       def initialize(value)
+        super()
+
         @value = value
       end
 
@@ -52,6 +51,8 @@ class BaseArrayTest < Minitest::Test
       include Sunstone::Objects::Parentable
 
       def initialize(value)
+        super()
+
         @value = value
       end
 
@@ -72,6 +73,8 @@ class BaseArrayTest < Minitest::Test
       attr_reader :name, :value
 
       def initialize(name, value)
+        super()
+
         @name = name
         @value = value
       end
@@ -96,6 +99,8 @@ class BaseArrayTest < Minitest::Test
       attr_reader :name, :value
 
       def initialize(name, value)
+        super()
+
         @name = name
         @value = value
       end

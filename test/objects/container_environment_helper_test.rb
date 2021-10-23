@@ -1,8 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/container_environment_helper'
-require 'sunstone/objects/env_var'
-require 'sunstone/objects/env_var_source'
-
 class ContainerEnvironmentHelperTest < Minitest::Test
   attr_reader :sut, :env, :env_from
 

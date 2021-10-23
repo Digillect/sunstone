@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/policy_rule'
-
 class PolicyRuleTest < Minitest::Test
   attr_reader :sut
 

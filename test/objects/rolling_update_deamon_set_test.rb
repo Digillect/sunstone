@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/rolling_update_daemon_set'
-
 class RollingUpdateDaemonSetTest < Minitest::Test
   def setup
     @sut = Sunstone::Objects::RollingUpdateDaemonSet.new

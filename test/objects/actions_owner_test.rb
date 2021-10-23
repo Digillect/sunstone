@@ -1,7 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/base_object'
-require 'sunstone/objects/actions_owner'
-
 class ActionsOwnerTest < Minitest::Test
   attr_reader :sut
 

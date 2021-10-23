@@ -1,6 +1,3 @@
-require 'test_helper'
-require 'sunstone/objects/property'
-
 class PropertyAttributesTest < Minitest::Test
   Property = Sunstone::Objects::Property
 
