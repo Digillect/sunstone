@@ -23,6 +23,6 @@ R.scope :hello do
   end
 
   ingress do
-    add_rule V.host # <-- Using "host" value
+    add_service_rule V.host # <-- Using "host" value
   end
 end

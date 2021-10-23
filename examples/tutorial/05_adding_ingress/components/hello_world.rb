@@ -15,5 +15,5 @@ R.service :hello do
 end
 
 R.ingress :hello do
-  add_rule 'hello.example.org', :hello # <-- Expose service "hello" as a host with name hello.example.org
+  add_service_rule 'hello.example.org', :hello # <-- Expose service "hello" as a host with name hello.example.org
 end

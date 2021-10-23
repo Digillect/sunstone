@@ -1,6 +1,6 @@
 # Sunstone
 
-[![Build Status](https://travis-ci.com/Digillect/sunstone.svg?branch=master)](https://travis-ci.com/Digillect/sunstone)
+[![ci](https://github.com/Digillect/sunstone/actions/workflows/ci.yml/badge.svg)](https://github.com/Digillect/sunstone/actions/workflows/ci.yml)
 
 Declarative language for Kubernetes resource manifests and Helm charts.
 
@@ -46,7 +46,7 @@ R.scope 'hello' do
   end
 
   ingress do
-    add_rule 'hello.example.org'
+    add_service_rule 'hello.example.org'
   end
 end
 ```
@@ -76,11 +76,13 @@ $ brew install --HEAD sunstone
 
 ## Use Docker image
 
-The following command will convert templates in the `<input directory>` and will put
-results into the `<output directory>` as separate files:
+Docker image contains bundled sunstone that runs in `/data` directory, so it is
+simple to map your files and pickup results. This image is also a base for the
+[Sunstone/Helm/Kubectl image](https://github.com/Digillect/sunstone-helm-kubectl) that
+is suitable to use in your CI/CD pipelines.
 
 ```bash
-docker run -i --rm -v <input directory>:/data/input -v <output directory>:/data/output digillect/sunstone sunstone [flags]
+docker run -i --rm -v `PWD`:/data digillect/sunstone sunstone [flags]
 ```
 
 ## Usage

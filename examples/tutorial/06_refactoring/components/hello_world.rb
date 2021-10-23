@@ -16,6 +16,6 @@ R.scope :hello do # <-- Scope name is used as a default for resource names (and 
   end
 
   ingress do # <-- Name is omitted, so "hello" will be used
-    add_rule 'hello.example.org' # <-- Service name is omitted, will use Ingress' name (which is hello, by coincidence)
+    add_service_rule 'hello.example.org' # <-- Service name is omitted, will use Ingress' name (which is hello, by coincidence)
   end
 end
