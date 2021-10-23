@@ -133,11 +133,24 @@ module Sunstone
 
       def create_scalar_reader(target_klass)
         variable = @variable
+        valid_values = @valid_values
 
-        target_klass.send :define_method, @name do |value = nil|
-          return instance_variable_get variable if value.nil?
+        if valid_values
+          target_klass.send :define_method, @name do |value = nil|
+            return instance_variable_get variable if value.nil?
 
-          instance_variable_set variable, value
+            unless valid_values.include? value
+              raise ValidationError, "Invalid value '#{value}', allowed values are: #{valid_values.join(', ')}"
+            end
+
+            instance_variable_set variable, value
+          end
+        else
+          target_klass.send :define_method, @name do |value = nil|
+            return instance_variable_get variable if value.nil?
+
+            instance_variable_set variable, value
+          end
         end
       end
 

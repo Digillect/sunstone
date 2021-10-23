@@ -187,21 +187,45 @@ class PropertyCreateMethodsTest < Minitest::Test
     assert_same array, result
   end
 
-  def test_accepts_valid_value
+  def test_accepts_valid_value_as_writer
     klass = create_klass :value, Integer, valid_values: [1, 3]
 
     sut = klass.new
 
     sut.value = 3
+
+    assert_equal 3, sut.value
   end
 
-  def test_rejects_invalid_value
+  def test_rejects_invalid_value_as_writer
     klass = create_klass :value, Integer, valid_values: [1, 3]
 
     sut = klass.new
 
     error = assert_raises Sunstone::Objects::ValidationError do
       sut.value = 42
+    end
+
+    assert_equal "Invalid value '42', allowed values are: 1, 3", error.message
+  end
+
+  def test_accepts_valid_value_as_reader
+    klass = create_klass :value, Integer, valid_values: [1, 3]
+
+    sut = klass.new
+
+    sut.value 3
+
+    assert_equal 3, sut.value
+  end
+
+  def test_rejects_invalid_value_as_reader
+    klass = create_klass :value, Integer, valid_values: [1, 3]
+
+    sut = klass.new
+
+    error = assert_raises Sunstone::Objects::ValidationError do
+      sut.value 42
     end
 
     assert_equal "Invalid value '42', allowed values are: 1, 3", error.message
