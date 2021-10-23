@@ -13,6 +13,14 @@ module Sunstone
         self
       end
 
+      def set_defined(keys_and_values)
+        keys_and_values.each_pair do |key, value|
+          data[key] = value unless value.nil?
+        end
+
+        self
+      end
+
       def file(keys_and_paths)
         keys_and_paths.each_pair do |key, path|
           content = File.read path
