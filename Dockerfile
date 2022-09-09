@@ -1,4 +1,4 @@
-FROM ruby:3.0-alpine3.14
+FROM ruby:3.0-alpine3.16
 
 # Install Bundler 2.0
 RUN gem install bundler
