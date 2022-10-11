@@ -97,7 +97,7 @@ module Sunstone
         end
 
         options.value_files = []
-        opts.on '-f', '--values valueFiles', Array, 'specify values in YAML file (can specify multiple)' do |files|
+        opts.on '-f', '--values valueFiles', Array, 'specify values in YAML or JSON file (can specify multiple)' do |files|
           options.value_files += files.map { |file| File.absolute_path(file) }
         end
 

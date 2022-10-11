@@ -7,7 +7,7 @@ module Sunstone
   class ValuesManager
     attr_reader :values
 
-    def initialize(debug: false)
+    def initialize(debug)
       @debug = debug
     end
 
