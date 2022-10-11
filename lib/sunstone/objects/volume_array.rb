@@ -29,7 +29,7 @@ module Sunstone
       end
 
       def nfs(volume_name, server, path, readonly: nil, &block)
-        source = NFSVolumeSource.new server, path, readonly
+        source = NfsVolumeSource.new server, path, readonly
 
         add_volume volume_name, source, &block
       end

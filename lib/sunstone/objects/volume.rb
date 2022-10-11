@@ -26,7 +26,7 @@ module Sunstone
           :emptyDir
         when HostPathVolumeSource
           :hostPath
-        when NFSVolumeSource
+        when NfsVolumeSource
           :nfs
         when PersistentVolumeClaimVolumeSource
           :persistentVolumeClaim

@@ -7,7 +7,7 @@ module Sunstone
   class ValuesManager
     attr_reader :values
 
-    def initialize(debug = false)
+    def initialize(debug: false)
       @debug = debug
     end
 
@@ -39,20 +39,29 @@ module Sunstone
     end
 
     def load_file(values, path)
-      file_values = YAML.load_file path
+      extension = File.extname(path).downcase
+
+      file_values = case extension
+                    when '.yaml', '.yml' then YAML.load_file path
+                    when '.json' then JSON.load_file path
+                    else
+                      raise "Unsupported format of values files #{path}"
+                    end
+
       files_to_include = file_values.delete '$include'
 
       values.deep_merge! file_values.deep_symbolize_keys
 
       process_includes values, files_to_include, File.dirname(path) if files_to_include
-    rescue StandardError => err
-      raise "Unable to load values file #{path}: #{err.message}"
+    rescue StandardError => e
+      raise "Unable to load values file #{path}: #{e.message}"
     end
 
     def process_includes(values, files_to_include, base_path)
-      if files_to_include.is_a? String
+      case files_to_include
+      when String
         load_file values, File.join(base_path, files_to_include)
-      elsif files_to_include.is_a? Array
+      when Array
         files_to_include.each do |file_to_include|
           load_file values, File.join(base_path, file_to_include.to_s)
         end
@@ -84,8 +93,8 @@ module Sunstone
     end
 
     def convert_value(value)
-      if value.start_with?('\'', '\"')
-        value[1..-1]
+      if value.start_with?('\'', '\"') && value.length > 1
+        value[1..-2]
       elsif value == 'true'
         true
       elsif value == 'false'

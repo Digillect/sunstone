@@ -1,6 +1,6 @@
 module Sunstone
   module Objects
-    class NFSVolumeSource < BaseObject
+    class NfsVolumeSource < BaseObject
       property :server, String
       property :path, String
       property :readonly, TrueClass, serialized_name: 'readOnly'
