@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'activesupport', '~> 5.2'
+gem 'activesupport', '~> 6.0'
 gem 'hashie'
 gem 'recursive-open-struct', '~> 1.1.0'
 gem 'zeitwerk'
